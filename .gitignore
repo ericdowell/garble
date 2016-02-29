@@ -4,6 +4,7 @@ public/storage/
 vendor/
 
 ## Files
+_ide_helper.php
 Homestead.yaml
 Homestead.json
 
