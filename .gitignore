@@ -1,8 +1,6 @@
 ## Folders
-bootstrap/cache/
 node_modules/
 public/storage/
-storage/
 vendor/
 
 ## Files
