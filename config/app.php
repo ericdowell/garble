@@ -156,6 +156,14 @@ return [
         Garble\Providers\EventServiceProvider::class,
         Garble\Providers\RouteServiceProvider::class,
 
+        /*
+         * Packages
+         */
+        Collective\Html\HtmlServiceProvider::class,
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+        TwigBridge\ServiceProvider::class,
+
     ],
 
     /*
@@ -201,6 +209,13 @@ return [
         'URL'       => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View'      => Illuminate\Support\Facades\View::class,
+
+        /*
+         * Packages
+         */
+        'Form' => Collective\Html\FormFacade::class,
+        'Html' => Collective\Html\HtmlFacade::class,
+        'Debugbar'  => Barryvdh\Debugbar\Facade::class,
 
     ],
 
