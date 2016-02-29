@@ -4,6 +4,9 @@ php:
   - 5.6
   - 7.0
 
+node_js:
+  - 4.1
+
 before_script:
   - cp .env.testing .env
   - mysql -e 'create database homestead_test;'
@@ -12,6 +15,7 @@ before_script:
   - php artisan key:generate
   - php artisan migrate:install && php artisan migrate:refresh
   - php artisan db:seed
+  - npm install -g gulp
   - npm install
   - gulp
 
