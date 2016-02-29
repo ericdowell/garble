@@ -11,6 +11,7 @@ Homestead.json
 
 ## Hidden Folders
 .idea/
+.vagrant/
 
 ## Hidden Files
 .DS_Store
