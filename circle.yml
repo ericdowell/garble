@@ -24,6 +24,8 @@ dependencies:
     - composer install --no-interaction --optimize-autoloader --prefer-source
   post:
     - php artisan key:generate
+    - php artisan migrate:install && php artisan migrate:refresh
+    - php artisan db:seed
     - pecl install xdebug
 test:
   override:
