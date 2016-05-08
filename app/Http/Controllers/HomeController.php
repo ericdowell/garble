@@ -2,8 +2,6 @@
 
 namespace Garble\Http\Controllers;
 
-use Garble\Http\Requests;
-
 class HomeController extends Controller
 {
     /**

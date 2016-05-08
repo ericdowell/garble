@@ -12,7 +12,7 @@ class CreateTodoTextTable extends Migration
      */
     public function up()
     {
-        Schema::create('todos', function (Blueprint $table) {
+        Schema::create('to_dos', function (Blueprint $table) {
             $table->increments('id');
             $table->string('title');
             $table->boolean('completed')->default(false);

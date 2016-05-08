@@ -33,7 +33,7 @@ class Text extends Model
      */
     public static function allByType($type)
     {
-        return self::where('text_type', $type)->get();
+        return self::where('text_type', str_singular($type))->get();
     }
 
     /**

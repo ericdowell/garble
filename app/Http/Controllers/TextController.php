@@ -12,6 +12,10 @@ abstract class TextController extends Controller
     /**
      * @var string
      */
+    protected $template;
+    /**
+     * @var string
+     */
     protected $type;
     /**
      * @var string
@@ -28,39 +32,18 @@ abstract class TextController extends Controller
 
     /**
      * TextController constructor.
-     *
-     * @param Route $route
      */
-    public function __construct(Route $route)
+    final public function __construct()
     {
-        $this->route = $route;
+        $this->route = app(Route::class);
+        $this->template = $this->route()->getName();
 
-        list($type) = explode('.', $this->route()->getName());
+        list($type) = explode('.', $this->template);
         $typeName = str_plural(ucfirst($type));
 
         $this->type = $type;
         $this->typeName = $typeName;
         $this->defaultData = compact('type', 'typeName');
-    }
-
-    /**
-     * @return Route
-     */
-    protected function route()
-    {
-        return $this->route;
-    }
-
-    /**
-     * @param $data
-     *
-     * @return \Illuminate\Http\Response
-     */
-    protected function render($data = [])
-    {
-        $html = view($this->route()->getName(), $this->defaultData, $data)->render();
-
-        return response($html);
     }
 
     /**
@@ -98,21 +81,21 @@ abstract class TextController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param string $slug
+     * @param  string $slug
      *
      * @return \Illuminate\Http\Response
      */
     public function show($slug)
     {
-        $post = Text::findBySlug($slug);
+        ${$this->type} = Text::findBySlug($slug);
 
-        return $this->render(compact('post'));
+        return $this->render(compact($this->type));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int $slug
+     * @param  string $slug
      *
      * @return \Illuminate\Http\Response
      */
@@ -144,5 +127,25 @@ abstract class TextController extends Controller
     public function destroy($slug)
     {
         //
+    }
+
+    /**
+     * @return Route
+     */
+    protected function route()
+    {
+        return $this->route;
+    }
+
+    /**
+     * @param $data
+     *
+     * @return \Illuminate\Http\Response
+     */
+    protected function render($data = [])
+    {
+        $html = view($this->template, $this->defaultData, $data)->render();
+
+        return response($html);
     }
 }

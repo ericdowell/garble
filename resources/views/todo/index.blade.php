@@ -9,9 +9,9 @@
 
                 <div class="panel-body">
                     <ul>
-                    @foreach($all as $post)
-                        <li><a href="{{ route($type.'.show', $post->slug ) }}" title="{{ $post->text->title }}">{{ $post->text->title }}</a></li>
-                    @endforeach
+                        @foreach($all as $todo)
+                            <li><a href="{{ route($type.'.show', $todo->slug ) }}" title="{{ $todo->text->title }}">{{ $todo->text->title }}</a></li>
+                        @endforeach
                     </ul>
                 </div>
             </div>
