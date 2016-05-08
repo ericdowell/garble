@@ -2,8 +2,9 @@
 
 namespace Garble\Http\Controllers\Auth;
 
-use Garble\User;
 use Validator;
+use Garble\User;
+use Illuminate\Http\Request;
 use Garble\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
@@ -21,7 +22,9 @@ class AuthController extends Controller
     |
     */
 
-    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins {
+        AuthenticatesAndRegistersUsers::login as laravelLogin;
+    }
 
     /**
      * Where to redirect users after login / registration.
@@ -31,6 +34,11 @@ class AuthController extends Controller
     protected $redirectTo = '/';
 
     /**
+     * @var string
+     */
+    protected $username;
+
+    /**
      * Create a new authentication controller instance.
      *
      * @return void
@@ -38,6 +46,21 @@ class AuthController extends Controller
     public function __construct()
     {
         $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
+    }
+
+    /**
+     * Handle a login request to the application.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function login(Request $request)
+    {
+        $field = filter_var($request->input('login'), FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+        $request->merge([$field => $request->input('login')]);
+        $this->username = $field;
+
+        return self::laravelLogin($request);
     }
 
     /**
@@ -51,6 +74,7 @@ class AuthController extends Controller
         return Validator::make($data, [
             'name' => 'required|max:255',
             'email' => 'required|email|max:255|unique:users',
+            'username' => 'required|username|max:255|unique:users',
             'password' => 'required|confirmed|min:6',
         ]);
     }
@@ -66,6 +90,7 @@ class AuthController extends Controller
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
+            'username' => $data['username'],
             'password' => bcrypt($data['password']),
         ]);
     }
