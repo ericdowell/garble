@@ -6,9 +6,7 @@ use Auth;
 use Route;
 use Garble\Text;
 use Garble\Http\Requests;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
+use Garble\Http\Requests\TextsRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
@@ -102,50 +100,40 @@ abstract class TextController extends Controller
      */
     public function create()
     {
-        $options = ['route' => 'note.' . $this->formAction];
-        $body = request()->old('body');
+        $options = ['route' => sprintf('%s.%s', $this->type, $this->formAction)];
 
-        return $this->render(compact('options', 'body'));
+        return $this->render(compact('options'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
+     * @param  \Garble\Http\Requests\TextsRequest $request
      *
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeModel(TextsRequest $request)
     {
-        $slug = Str::slug($request->input('slug'));
-        $userId = Auth::user()->id;
-        try {
-            Text::findBySlug($slug);
-            $error = new MessageBag([
-                'slug' => 'That slug is already in use.',
-            ]);
-
-            return redirect()->back()->withErrors($error)->withInputs();
+        $modelAttributes = [];
+        foreach ($this->modelInstance->getFillable() as $key) {
+            $input = $request->input($key);
+            if (!empty($input)) {
+                $modelAttributes[$key] = $input;
+            }
         }
-        catch (ModelNotFoundException  $e) {
-            $modelAttributes = [
-                'body'    => $request->input('body'),
-                'user_id' => $userId,
-            ];
-            $model = $this->modelInstance->create($modelAttributes);
+        $model = $this->modelInstance->create($modelAttributes);
 
-            $model->save();
+        $model->save();
 
-            $attributes = [
-                'slug'      => $slug,
-                'text_type' => $this->type,
-                'text_id'   => $model->id,
-                'user_id'   => $userId,
-            ];
-            $text = Text::create($attributes);
+        $attributes = [
+            'slug'      => $request->input('slug'),
+            'text_type' => $this->type,
+            'text_id'   => $model->id,
+            'user_id'   => $request->input('user_id'),
+        ];
+        $text = Text::create($attributes);
 
-            $text->save();
-        }
+        $text->save();
 
         return redirect()->route($this->type . '.index');
     }
@@ -174,31 +162,40 @@ abstract class TextController extends Controller
     public function edit($slug)
     {
         $instance = Text::findBySlug($slug);
-        $options = ['route' => ['note.' . $this->formAction, $instance->slug], 'method' => 'put'];
-        $body = request()->old('body') ?: $instance->text->body;
+        $options = [
+            'route'  => [sprintf('%s.%s', $this->type, $this->formAction), $instance->slug],
+            'method' => 'put',
+        ];
 
-        return $this->render(compact('instance', 'options', 'body'));
+        return $this->render(compact('instance', 'options'));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request $request
-     * @param  string                   $slug
+     * @param  \Garble\Http\Requests\TextsRequest $request
+     * @param  string                             $slug
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $slug)
+    public function updateModel(TextsRequest $request, $slug)
     {
         $text = Text::findBySlug($slug);
-        $userId = Auth::user()->id;
+        $attributes = [];
 
-        $attributes = [
-            'body'    => $request->input('body'),
-            'user_id' => $userId,
-        ];
+        if ($slug != $text->slug) {
+            $text->update(['slug' => $slug]);
+        }
+
         /** @var Model $model */
         $model = $text->text;
+        //Loop over fillable fields
+        foreach ($model->getFillable() as $key) {
+            $input = $request->input($key);
+            if (!empty($input)) {
+                $attributes[$key] = $input;
+            }
+        }
 
         $model->update($attributes);
 
@@ -215,8 +212,6 @@ abstract class TextController extends Controller
     public function destroy($slug)
     {
         $text = Text::findBySlug($slug);
-//        $userId = Auth::user()->id;
-
         /** @var Model $model */
         $model = $text->text;
 

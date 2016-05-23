@@ -19,13 +19,22 @@ class Text extends Model
         'slug',
     ];
     /**
-     * @var string
-     */
-    protected $primaryKey = 'slug';
-    /**
      * @var bool
      */
     public $incrementing = false;
+    /**
+     * @var string
+     */
+    protected $primaryKey = 'slug';
+
+    /**
+     * @var array
+     */
+    protected static $rules = [
+        'slug'      => 'required|unique:texts,slug',
+        'user_id'   => 'required',
+        'text_type' => 'required',
+    ];
 
     /**
      * @param $slug
@@ -35,6 +44,16 @@ class Text extends Model
     public static function findBySlug($slug)
     {
         return self::with('user')->findOrFail($slug);
+    }
+
+    /**
+     * @return mixed
+     */
+    public static function findByCurrentSlug()
+    {
+        $slug = request()->input('slug');
+
+        return self::findBySlug($slug);
     }
 
     /**
@@ -61,5 +80,13 @@ class Text extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * @return array
+     */
+    public static function rules()
+    {
+        return self::$rules;
     }
 }

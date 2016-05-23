@@ -24,9 +24,9 @@ trait HasRole
     /**
      * @param $role
      */
-    public function assignRole( $role )
+    public function assignRole($role)
     {
-        if( is_string($role)) {
+        if (is_string($role)) {
             $this->roles()->sync(
                 Role::whereName($role)->firstOrFail()
             );
@@ -52,6 +52,6 @@ trait HasRole
             return $this->roles->contains('name', $role);
         }
 
-        return !! $role->intersect($this->roles)->count();
+        return !!$role->intersect($this->roles)->count();
     }
 }

@@ -14,7 +14,9 @@ Route::group(['middleware' => 'web'], function () {
     /**
      * Models
      */
-    Route::resource('note', 'NotesController');
-    Route::resource('post', 'PostsController');
-    Route::resource('todo', 'ToDosController');
+    Route::group(['middleware' => 'texts'], function () {
+        Route::resource('note', 'NotesController');
+        Route::resource('post', 'PostsController');
+        Route::resource('todo', 'ToDosController');
+    });
 });
