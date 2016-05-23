@@ -3,14 +3,14 @@
 namespace Garble\Http\Controllers;
 
 use Auth;
+use Route;
 use Garble\Text;
 use Garble\Http\Requests;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Request;
-use Illuminate\Routing\Route;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\MessageBag;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
+use Illuminate\Support\MessageBag;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class TextController extends Controller
 {
@@ -61,9 +61,9 @@ abstract class TextController extends Controller
      */
     final public function __construct()
     {
-        if( php_sapi_name() != 'cli' ) {
-            $this->setupModel();
-            $this->route = app(Route::class);
+        $this->setupModel();
+        $this->route = Route::current();
+        if (method_exists($this->route, 'getName') && !empty($this->route->getName())) {
             $this->template = $this->route()->getName();
 
             list($type, $action) = explode('.', $this->template);
@@ -102,7 +102,7 @@ abstract class TextController extends Controller
      */
     public function create()
     {
-        $options = ['route' => 'note.'.$this->formAction];
+        $options = ['route' => 'note.' . $this->formAction];
         $body = request()->old('body');
 
         return $this->render(compact('options', 'body'));
@@ -174,7 +174,7 @@ abstract class TextController extends Controller
     public function edit($slug)
     {
         $instance = Text::findBySlug($slug);
-        $options = ['route' => ['note.'.$this->formAction, $instance->slug], 'method' => 'put'];
+        $options = ['route' => ['note.' . $this->formAction, $instance->slug], 'method' => 'put'];
         $body = request()->old('body') ?: $instance->text->body;
 
         return $this->render(compact('instance', 'options', 'body'));
@@ -202,7 +202,7 @@ abstract class TextController extends Controller
 
         $model->update($attributes);
 
-        return redirect()->route($this->type.'.index');
+        return redirect()->route($this->type . '.index');
     }
 
     /**
@@ -223,11 +223,11 @@ abstract class TextController extends Controller
         $model->destroy($model->id);
         $text->destroy($text->slug);
 
-        return redirect()->route($this->type.'.index');
+        return redirect()->route($this->type . '.index');
     }
 
     /**
-     * @return Route
+     * @return \Illuminate\Routing\Route
      */
     protected function route()
     {
