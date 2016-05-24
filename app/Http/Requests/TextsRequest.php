@@ -4,7 +4,6 @@ namespace Garble\Http\Requests;
 
 use Garble\Text;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Illuminate\Support\Str;
 
 abstract class TextsRequest extends Request
 {
@@ -54,7 +53,7 @@ abstract class TextsRequest extends Request
             $rules['slug'] = sprintf('%s,"%s"', $rules['slug'], $model->id);
         }
 
-        if (!property_exists($this, 'rules') || !is_array($this->rules)) {
+        if (! property_exists($this, 'rules') || ! is_array($this->rules)) {
             return $rules;
         }
 
@@ -71,7 +70,7 @@ abstract class TextsRequest extends Request
             'required'    => 'The :attribute is required',
         ];
 
-        if (!property_exists($this, 'messages') || !is_array($this->messages)) {
+        if (! property_exists($this, 'messages') || ! is_array($this->messages)) {
             return $messages;
         }
 

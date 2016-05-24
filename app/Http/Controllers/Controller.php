@@ -17,7 +17,7 @@ class Controller extends BaseController
      */
     protected function authorizedAction($model)
     {
-        $fullAction = __NAMESPACE__."\\".Route::currentRouteAction();
+        $fullAction = __NAMESPACE__.'\\'.Route::currentRouteAction();
 
         $this->authorize($fullAction, [$model]);
     }

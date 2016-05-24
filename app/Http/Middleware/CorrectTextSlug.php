@@ -32,7 +32,7 @@ class CorrectTextSlug
             $request->isMethod('PUT') ||
             $request->isMethod('PATCH')
         );
-        if (!empty($slug) && $validateMethod) {
+        if (! empty($slug) && $validateMethod) {
             $strSlug = Str::slug($slug);
             if ($strSlug !== $slug) {
                 $request->request->set('slug', $strSlug);

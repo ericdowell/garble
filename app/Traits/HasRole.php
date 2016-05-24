@@ -3,9 +3,8 @@
  * Created by PhpStorm.
  * User: eric
  * Date: 5/7/16
- * Time: 7:03 PM
+ * Time: 7:03 PM.
  */
-
 namespace Garble\Traits;
 
 use Garble\Role;
@@ -52,6 +51,6 @@ trait HasRole
             return $this->roles->contains('name', $role);
         }
 
-        return !!$role->intersect($this->roles)->count();
+        return (bool) $role->intersect($this->roles)->count();
     }
 }

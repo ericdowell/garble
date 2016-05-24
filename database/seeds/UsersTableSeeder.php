@@ -12,14 +12,14 @@ class UsersTableSeeder extends Seeder
      */
     public function run()
     {
-        $garbleUser = User::where( 'name', 'gable' )->get()->first();
+        $garbleUser = User::where('name', 'gable')->get()->first();
         //New Install or being seeder being run for another time.
-        if( empty( $garbleUser ) && empty( User::first() ) ) {
+        if (empty($garbleUser) && empty(User::first())) {
             $userInfo = [
                 'name' => 'Admin',
                 'email' => 'support@garbleapp.com',
                 'username' => 'garble',
-                'password' => Hash::make( env('APP_KEY') ),
+                'password' => Hash::make(env('APP_KEY')),
             ];
             /** @var User $user */
             $user = factory(User::class)->create($userInfo)->save();

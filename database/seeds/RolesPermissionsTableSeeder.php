@@ -14,7 +14,7 @@ class RolesTableSeeder extends Seeder
     public function run()
     {
         $existingRole = Role::whereName('admin')->get()->first();
-        if (!!$existingRole) {
+        if ((bool) $existingRole) {
             $roleInfo = [
                 'name'  => 'admin',
                 'label' => 'Admin User',
@@ -25,19 +25,19 @@ class RolesTableSeeder extends Seeder
         /** @var Role $admin */
         $admin = Role::whereName('admin')->get()->first();
         foreach (Route::getRoutes()->getRoutes() as $route) {
-            /** @var \Illuminate\Routing\Route $route */
+            /* @var \Illuminate\Routing\Route $route */
             $action = $route->getAction();
 
             $homeOrAuth = (stristr($action['controller'], 'auth') && stristr($action['controller'], 'home'));
 
-            if (array_key_exists('controller', $action) && !$homeOrAuth) {
+            if (array_key_exists('controller', $action) && ! $homeOrAuth) {
                 // You can also use explode('@', $action['controller']); here
                 // to separate the class name from the method
                 $existingPermission = Permission::whereName($action['controller'])->get()->first();
-                if (!!$existingPermission) {
+                if ((bool) $existingPermission) {
                     $routeAction = explode('@', $action['controller']);
                     $model = str_replace([$action['namespace'], 'Controller'], ['', ''], $action['controller']);
-                    $label = ucfirst($routeAction) . ucwords(str_replace('_', ' ', snake_case($model)));
+                    $label = ucfirst($routeAction).ucwords(str_replace('_', ' ', snake_case($model)));
                     $permissionInfo = [
                         'name'  => $action['controller'],
                         'label' => $label,
@@ -57,7 +57,7 @@ class RolesTableSeeder extends Seeder
     {
         $resources = [];
         foreach (Route::getRoutes()->getRoutes() as $route) {
-            /** @var \Illuminate\Routing\Route $route */
+            /* @var \Illuminate\Routing\Route $route */
             $action = $route->getAction();
 
             if (array_key_exists('controller', $action) && stristr($action['controller'], 'auth') &&
@@ -66,17 +66,17 @@ class RolesTableSeeder extends Seeder
                 // You can also use explode('@', $action['controller']); here
                 // to separate the class name from the method
                 $existingPermission = Permission::whereName($action['controller'])->get()->first();
-                if (!!$existingPermission) {
+                if ((bool) $existingPermission) {
                     list($controller, $routeAction) = explode('@', $action['controller']);
 
                     $model = str_replace([$action['namespace'], 'Controller'], ['', ''], $controller);
                     $titleCase = ucwords(str_replace('_', ' ', snake_case($model)));
-                    $label = ucfirst($routeAction) . $titleCase;
+                    $label = ucfirst($routeAction).$titleCase;
 
-                    if (!array_key_exists($controller, $resources)) {
+                    if (! array_key_exists($controller, $resources)) {
                         $resources[$controller]['parent'] = [
                             'name'  => $controller,
-                            'label' => 'Access ' . $titleCase,
+                            'label' => 'Access '.$titleCase,
                         ];
                     }
 
