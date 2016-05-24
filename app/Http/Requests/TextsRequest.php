@@ -29,8 +29,7 @@ abstract class TextsRequest extends Request
 
             //Otherwise it's an update PUT
             return $text->user->id == $userId;
-        }
-        catch (ModelNotFoundException  $error) {
+        } catch (ModelNotFoundException  $error) {
             //Field doesn't match current user, denied
             if ($this->input('user_id') != $userId) {
                 return false;
@@ -86,8 +85,7 @@ abstract class TextsRequest extends Request
     {
         try {
             return Text::findByCurrentSlug();
-        }
-        catch (ModelNotFoundException $error) {
+        } catch (ModelNotFoundException $error) {
         }
     }
 }
