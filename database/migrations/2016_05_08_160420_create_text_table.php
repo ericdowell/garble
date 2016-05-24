@@ -17,7 +17,7 @@ class CreateTextTable extends Migration
             $table->string('slug')->unique();
             $table->string('text_type');
             $table->integer('text_id')->unsigned();
-            $table->integer('user_id')->references( 'id' )->on( 'users' );
+            $table->integer('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

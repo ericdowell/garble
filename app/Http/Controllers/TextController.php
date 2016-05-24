@@ -2,10 +2,8 @@
 
 namespace Garble\Http\Controllers;
 
-use Auth;
 use Route;
 use Garble\Text;
-use Garble\Http\Requests;
 use Garble\Http\Requests\TextsRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -61,7 +59,7 @@ abstract class TextController extends Controller
     {
         $this->setupModel();
         $this->route = Route::current();
-        if (method_exists($this->route, 'getName') && !empty($this->route->getName())) {
+        if (method_exists($this->route, 'getName') && ! empty($this->route->getName())) {
             $this->template = $this->route()->getName();
 
             list($type, $action) = explode('.', $this->template);
@@ -117,7 +115,7 @@ abstract class TextController extends Controller
         $modelAttributes = [];
         foreach ($this->modelInstance->getFillable() as $key) {
             $input = $request->input($key);
-            if (!empty($input)) {
+            if (! empty($input)) {
                 $modelAttributes[$key] = $input;
             }
         }
@@ -135,7 +133,7 @@ abstract class TextController extends Controller
 
         $text->save();
 
-        return redirect()->route($this->type . '.index');
+        return redirect()->route($this->type.'.index');
     }
 
     /**
@@ -192,14 +190,14 @@ abstract class TextController extends Controller
         //Loop over fillable fields
         foreach ($model->getFillable() as $key) {
             $input = $request->input($key);
-            if (!empty($input)) {
+            if (! empty($input)) {
                 $attributes[$key] = $input;
             }
         }
 
         $model->update($attributes);
 
-        return redirect()->route($this->type . '.index');
+        return redirect()->route($this->type.'.index');
     }
 
     /**
@@ -218,7 +216,7 @@ abstract class TextController extends Controller
         $model->destroy($model->id);
         $text->destroy($text->slug);
 
-        return redirect()->route($this->type . '.index');
+        return redirect()->route($this->type.'.index');
     }
 
     /**
@@ -250,7 +248,7 @@ abstract class TextController extends Controller
     {
         /** @var ModelNotFoundException $modelException */
         $modelException = with(new ModelNotFoundException())->setModel($this->model);
-        if (!class_exists($modelException->getModel())) {
+        if (! class_exists($modelException->getModel())) {
             throw $modelException;
         }
 

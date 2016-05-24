@@ -36,7 +36,7 @@ class Kernel extends HttpKernel
         ],
         'texts' => [
             \Garble\Http\Middleware\CorrectTextSlug::class,
-        ]
+        ],
     ];
 
     /**
