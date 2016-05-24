@@ -5,8 +5,6 @@ engines:
       file_extensions: "php"
   fixme:
     enabled: true
-  phpmd:
-    enabled: true
 ratings:
   paths:
     - "**.php"
