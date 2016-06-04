@@ -17,7 +17,6 @@ abstract class TextController extends TextPublicController
         if (! in_array($this->formAction, $this->publicActions)) {
             $this->middleware('auth');
         }
-
     }
 
     /**
