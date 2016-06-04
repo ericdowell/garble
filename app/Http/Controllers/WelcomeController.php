@@ -2,10 +2,6 @@
 
 namespace Garble\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Garble\Http\Requests;
-
 class WelcomeController extends Controller
 {
     /**

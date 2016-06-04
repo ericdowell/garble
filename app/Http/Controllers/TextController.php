@@ -44,7 +44,7 @@ abstract class TextController extends TextPublicController
         $modelAttributes = [];
         foreach ($this->modelInstance->getFillable() as $key) {
             $input = $request->input($key);
-            if (!empty($input)) {
+            if (! empty($input)) {
                 $modelAttributes[$key] = $input;
             }
         }
@@ -105,7 +105,7 @@ abstract class TextController extends TextPublicController
         //Loop over fillable fields
         foreach ($model->getFillable() as $key) {
             $input = $request->input($key);
-            if (!empty($input)) {
+            if (! empty($input)) {
                 $attributes[$key] = $input;
             }
         }
