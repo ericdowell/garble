@@ -129,7 +129,7 @@ abstract class TextPublicController extends Controller
     {
         /** @var ModelNotFoundException $modelException */
         $modelException = with(new ModelNotFoundException())->setModel($this->model);
-        if (!class_exists($modelException->getModel())) {
+        if (! class_exists($modelException->getModel())) {
             throw $modelException;
         }
 
@@ -142,7 +142,7 @@ abstract class TextPublicController extends Controller
     protected function setupDefaults()
     {
         $this->route = Route::current();
-        if (method_exists($this->route, 'getName') && !empty($this->route->getName())) {
+        if (method_exists($this->route, 'getName') && ! empty($this->route->getName())) {
             $this->template = $this->route()->getName();
 
             $this->setTypeAndFormAction()

@@ -139,6 +139,6 @@ abstract class TextController extends TextPublicController
      */
     protected function redirectToIndex()
     {
-        return redirect()->route($this->type . '.index');
+        return redirect()->route($this->type.'.index');
     }
 }
