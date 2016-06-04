@@ -29,7 +29,7 @@ abstract class TextController extends Controller
     /**
      * @var array
      */
-    private $defaultData = [];
+    private $mergeData = [];
     /**
      * Name of the affected Eloquent model.
      *
@@ -57,28 +57,10 @@ abstract class TextController extends Controller
      */
     final public function __construct()
     {
-        $this->setupModel();
-        $this->route = Route::current();
-        if (method_exists($this->route, 'getName') && ! empty($this->route->getName())) {
-            $this->template = $this->route()->getName();
+        $this->middleware('auth');
 
-            list($type, $action) = explode('.', $this->template);
-            $typeName = str_plural(ucfirst($type));
-            if (array_key_exists($action, $this->actionMap)) {
-                $action = $this->actionMap[$action];
-            }
-            $this->formAction = $action;
-            $btnMessage = sprintf('%s %s', ucfirst($action), ucfirst($type));
-
-            $model = $this->model;
-            $instance = new $model();
-            $this->modelInstance = $instance;
-
-            $this->type = $type;
-            $this->typeName = $typeName;
-
-            $this->defaultData = compact('type', 'action', 'typeName', 'btnMessage', 'instance');
-        }
+        $this->setupModel()
+            ->setupDefaults();
     }
 
     /**
@@ -115,7 +97,7 @@ abstract class TextController extends Controller
         $modelAttributes = [];
         foreach ($this->modelInstance->getFillable() as $key) {
             $input = $request->input($key);
-            if (! empty($input)) {
+            if (!empty($input)) {
                 $modelAttributes[$key] = $input;
             }
         }
@@ -133,7 +115,7 @@ abstract class TextController extends Controller
 
         $text->save();
 
-        return redirect()->route($this->type.'.index');
+        return $this->redirectToIndex();
     }
 
     /**
@@ -190,14 +172,14 @@ abstract class TextController extends Controller
         //Loop over fillable fields
         foreach ($model->getFillable() as $key) {
             $input = $request->input($key);
-            if (! empty($input)) {
+            if (!empty($input)) {
                 $attributes[$key] = $input;
             }
         }
 
         $model->update($attributes);
 
-        return redirect()->route($this->type.'.index');
+        return $this->redirectToIndex();
     }
 
     /**
@@ -216,7 +198,15 @@ abstract class TextController extends Controller
         $model->destroy($model->id);
         $text->destroy($text->slug);
 
-        return redirect()->route($this->type.'.index');
+        return $this->redirectToIndex();
+    }
+
+    /**
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    protected function redirectToIndex()
+    {
+        return redirect()->route($this->type . '.index');
     }
 
     /**
@@ -234,9 +224,21 @@ abstract class TextController extends Controller
      */
     protected function render($data = [])
     {
-        $html = view($this->template, $data, $this->defaultData)->render();
+        $html = view($this->template, $data, $this->mergeData)->render();
 
         return response($html);
+    }
+
+    /**
+     * @param mixed $items
+     *
+     * @return $this
+     */
+    protected function pushToDefaults(array $items)
+    {
+        $this->mergeData = array_merge($this->mergeData, $items);
+
+        return $this;
     }
 
     /**
@@ -248,10 +250,66 @@ abstract class TextController extends Controller
     {
         /** @var ModelNotFoundException $modelException */
         $modelException = with(new ModelNotFoundException())->setModel($this->model);
-        if (! class_exists($modelException->getModel())) {
+        if (!class_exists($modelException->getModel())) {
             throw $modelException;
         }
 
         return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function setupDefaults()
+    {
+        $this->route = Route::current();
+        if (method_exists($this->route, 'getName') && !empty($this->route->getName())) {
+            $this->template = $this->route()->getName();
+
+            $this->setTypeAndFormAction()
+                ->setTypeName()
+                ->setModelInstance();
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    protected function setTypeAndFormAction()
+    {
+        list($type, $action) = explode('.', $this->template);
+
+        if (array_key_exists($action, $this->actionMap)) {
+            $action = $this->actionMap[$action];
+        }
+        $this->type = $type;
+        $this->formAction = $action;
+        $btnMessage = sprintf('%s %s', ucfirst($this->formAction), ucfirst($this->type));
+
+        $data = compact('type', 'btnMessage', 'action');
+
+        return $this->pushToDefaults($data);
+    }
+
+    /**
+     * @return $this
+     */
+    protected function setTypeName()
+    {
+        $this->typeName = $typeName = str_plural(ucfirst($this->type));
+
+        return $this->pushToDefaults(compact('typeName'));
+    }
+
+    /**
+     * @return $this
+     */
+    protected function setModelInstance()
+    {
+        $this->modelInstance = $instance = new $this->model();
+
+        return $this->pushToDefaults(compact('instance'));
     }
 }
