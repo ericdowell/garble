@@ -8,6 +8,11 @@
                 <div class="panel-heading">Note</div>
 
                 <div class="panel-body">
+                    @if(Auth::user() && Auth::user()->id == $note->user->id)
+                        <p>
+                            <a class="btn btn-link" href="{{ route($type.'.edit', $note->slug) }}">Edit</a>
+                        </p>
+                    @endif
                     By: <strong>{{ $note->user->name }}</strong>
                     <p>{{ $note->text->body }}</p>
                 </div>

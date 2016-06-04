@@ -9,7 +9,7 @@ Route::group(['middleware' => 'web'], function () {
     /*
      * Indexes
      */
-    Route::get('/', ['as' => 'welcome.index', 'uses' => 'HomeController@welcome']);
+    Route::get('/', ['as' => 'welcome.index', 'uses' => 'WelcomeController@index']);
     Route::get('/home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
     /*
      * Models
