@@ -9,9 +9,9 @@
             <strong>{{ $errors->first('title') }}</strong>
         </span>
         @endif
-        {{ ($title = request()->old('body')) ? '':'' }}
+        {{ ($title = request()->old('title')) ? '':'' }}
         @if($action == 'update' && empty($title))
-            {{ ($title = $instance->text->body) ? '':'' }}
+            {{ ($title = $instance->text->title) ? '':'' }}
         @endif
         {{ Form::input( 'text', 'title', $title, ['class' => 'form-control'] ) }}
     </div>

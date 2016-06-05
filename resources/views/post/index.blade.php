@@ -14,9 +14,7 @@
                             <a href="{{ route($type.'.show', $post->slug ) }}" title="{{ $post->text->title }}">{{ $post->text->title }}</a>
                             @if(Auth::user() && Auth::user()->id == $post->user->id)
                             <a class="btn btn-link" href="{{ route($type.'.edit', $post->slug) }}">Edit</a>
-                            {{ Form::model( $post, ['route' => [$type.'.destroy', $post->slug], 'method' => 'delete'] ) }}
-                            {{ Form::submit( 'Delete', [ 'class' => 'btn btn-link' ] ) }}
-                            {{ Form::close() }}
+                            @include('include.delete_form', ['title' => $post->text->title , 'instance' => $post])
                             @endif
                         </li>
                     @endforeach

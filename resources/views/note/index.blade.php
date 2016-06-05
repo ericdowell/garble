@@ -14,9 +14,7 @@
                             <a href="{{ route($type.'.show', $note->slug ) }}" title="{{ str_limit($note->text->body, 20) }}">{{ str_limit($note->text->body, 20) }}</a>
                             @if(Auth::user() && Auth::user()->id == $note->user->id)
                             <a class="btn btn-link" href="{{ route($type.'.edit', $note->slug) }}">Edit</a>
-                            {{ Form::model( $note, ['route' => [$type.'.destroy', $note->slug], 'method' => 'delete'] ) }}
-                                {{ Form::submit( 'Delete', [ 'class' => 'btn btn-link' ] ) }}
-                            {{ Form::close() }}
+                            @include('include.delete_form', ['title' => str_limit($note->text->body, 20), 'instance' => $note])
                             @endif
                         </li>
                     @endforeach
