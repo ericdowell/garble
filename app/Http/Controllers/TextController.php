@@ -55,6 +55,7 @@ abstract class TextController extends Controller
      * @var string
      */
     protected $formAction;
+
     /**
      * TextController constructor.
      */
