@@ -17,6 +17,7 @@ dependencies:
     - echo "memory_limit = -1" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
     - sudo composer self-update
     - gem install compass
+    - npm install -g npm@3.10.*
     - npm install -g gulp
     - npm install
     - gulp --production
