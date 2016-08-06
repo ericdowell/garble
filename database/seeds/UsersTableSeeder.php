@@ -16,8 +16,7 @@ class UsersTableSeeder extends Seeder
         //New Install or being seeder being run for another time.
         if (empty($garbleUser) && empty(User::first())) {
             $userInfo = [
-                'name' => 'Admin',
-                'email' => 'support@garbleapp.com',
+                'name'     => 'Garble Admin',
                 'username' => 'garble',
                 'password' => Hash::make(env('APP_KEY')),
             ];
