@@ -5,6 +5,7 @@ vendor/
 
 ## Files
 _ide_helper.php
+.phpstorm.meta.php
 Homestead.yaml
 Homestead.json
 
