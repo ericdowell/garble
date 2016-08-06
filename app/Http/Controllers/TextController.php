@@ -45,7 +45,7 @@ abstract class TextController extends Controller
      */
     protected $actionMap = [
         'create' => 'store',
-        'edit'   => 'update',
+        'edit' => 'update',
     ];
     protected $publicActions = [
         'index',
@@ -112,10 +112,10 @@ abstract class TextController extends Controller
         $model->save();
 
         $attributes = [
-            'slug'      => $request->input('slug'),
+            'slug' => $request->input('slug'),
             'text_type' => $this->type,
-            'text_id'   => $model->id,
-            'user_id'   => $request->input('user_id'),
+            'text_id' => $model->id,
+            'user_id' => $request->input('user_id'),
         ];
         $text = Text::create($attributes);
 
@@ -149,7 +149,7 @@ abstract class TextController extends Controller
     {
         $instance = Text::findBySlug($slug);
         $options = [
-            'route'  => [sprintf('%s.%s', $this->type, $this->formAction), $instance->slug],
+            'route' => [sprintf('%s.%s', $this->type, $this->formAction), $instance->slug],
             'method' => 'put',
         ];
 
