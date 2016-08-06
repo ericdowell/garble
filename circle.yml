@@ -1,0 +1,39 @@
+machine:
+  php:
+    version: 5.6.14
+  node:
+    version: 4.2.2
+  ruby:
+    version: 2.2.3
+  timezone:
+    America/Chicago
+  hosts:
+    localhost: 127.0.0.1
+checkout:
+  post:
+    - cp .env.testing .env
+dependencies:
+  pre:
+    - echo "memory_limit = -1" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
+    - sudo composer self-update
+    - gem install compass
+    - npm install -g npm@3.10.*
+    - npm install -g gulp
+    - npm install
+    - gulp --production
+  override:
+    - composer install --no-interaction --optimize-autoloader --prefer-source
+  post:
+    - php artisan key:generate
+    - php artisan migrate:install && php artisan migrate:refresh
+    - php artisan db:seed
+    - pecl install xdebug
+test:
+  override:
+    - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
+deployment:
+  development:
+    branch: master
+    commands:
+      - echo "deploy key here"

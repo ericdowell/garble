@@ -1,0 +1,18 @@
+engines:
+  phpcodesniffer:
+    enabled: true
+    config:
+      file_extensions: "php"
+  fixme:
+    enabled: true
+ratings:
+  paths:
+    - "**.php"
+exclude_paths:
+  - "bootstrap/*"
+  - "database/*"
+  - "resources/lang/*"
+  - "resources/views/*"
+  - "storage/*"
+  - "tests/*"
+  - "vendor/**/*"

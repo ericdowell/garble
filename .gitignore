@@ -1,14 +1,20 @@
-vendor/
+## Folders
 node_modules/
+public/storage/
+vendor/
 
-# Laravel 4 specific
-bootstrap/compiled.php
-app/storage/
+## Files
+_ide_helper.php
+.phpstorm.meta.php
+Homestead.yaml
+Homestead.json
 
-# Laravel 5 & Lumen specific
-bootstrap/cache/
-storage/
-.env.*.php
-.env.php
+## Hidden Folders
+.idea/
+.vagrant/
+
+## Hidden Files
+.DS_Store
 .env
-.env.example
+.env.php
+.env.*.php
