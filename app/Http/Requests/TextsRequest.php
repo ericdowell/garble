@@ -67,7 +67,7 @@ abstract class TextsRequest extends Request
     {
         $messages = [
             'slug.unique' => 'The :attribute provided is already in use.',
-            'required'    => 'The :attribute is required',
+            'required' => 'The :attribute is required',
         ];
 
         if (! property_exists($this, 'messages') || ! is_array($this->messages)) {

@@ -31,8 +31,8 @@ class Text extends Model
      * @var array
      */
     protected static $rules = [
-        'slug'      => 'required|unique:texts,slug',
-        'user_id'   => 'required',
+        'slug' => 'required|unique:texts,slug',
+        'user_id' => 'required',
         'text_type' => 'required',
     ];
 

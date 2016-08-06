@@ -16,7 +16,7 @@ class RolesTableSeeder extends Seeder
         $existingRole = Role::whereName('admin')->get()->first();
         if ((bool) $existingRole) {
             $roleInfo = [
-                'name'  => 'admin',
+                'name' => 'admin',
                 'label' => 'Admin User',
             ];
             factory(Role::class)->create($roleInfo)->save();
@@ -39,7 +39,7 @@ class RolesTableSeeder extends Seeder
                     $model = str_replace([$action['namespace'], 'Controller'], ['', ''], $action['controller']);
                     $label = ucfirst($routeAction).ucwords(str_replace('_', ' ', snake_case($model)));
                     $permissionInfo = [
-                        'name'  => $action['controller'],
+                        'name' => $action['controller'],
                         'label' => $label,
                     ];
 
@@ -75,13 +75,13 @@ class RolesTableSeeder extends Seeder
 
                     if (! array_key_exists($controller, $resources)) {
                         $resources[$controller]['parent'] = [
-                            'name'  => $controller,
+                            'name' => $controller,
                             'label' => 'Access '.$titleCase,
                         ];
                     }
 
                     $resources[$controller]['children'][] = [
-                        'name'  => $action['controller'],
+                        'name' => $action['controller'],
                         'label' => $label,
                     ];
                 }
