@@ -49,7 +49,7 @@ class AuthController extends Controller
     }
 
     /**
-     * There no registering
+     * There no registering.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
@@ -59,7 +59,7 @@ class AuthController extends Controller
     }
 
     /**
-     * There no registering
+     * There no registering.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
