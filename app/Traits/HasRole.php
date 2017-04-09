@@ -5,6 +5,7 @@
  * Date: 5/7/16
  * Time: 7:03 PM.
  */
+
 namespace Garble\Traits;
 
 use Garble\Role;
