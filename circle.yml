@@ -25,7 +25,7 @@ dependencies:
     - yarn
     - ./node_modules/.bin/gulp --production
   override:
-    - composer install --no-interaction --optimize-autoloader --prefer-source
+    - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
     - php artisan key:generate
     - php artisan migrate:install && php artisan migrate:refresh
