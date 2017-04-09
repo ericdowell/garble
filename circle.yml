@@ -27,7 +27,6 @@ dependencies:
     - php artisan key:generate
     - php artisan migrate:install && php artisan migrate:refresh
     - php artisan db:seed
-    - pecl install xdebug
 test:
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
