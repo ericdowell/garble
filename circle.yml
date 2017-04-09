@@ -18,9 +18,8 @@ dependencies:
     - sudo composer self-update
     - gem install compass
     - npm install -g npm@3.10.*
-    - npm install -g gulp
-    - npm install
-    - gulp --production
+    - yarn
+    - ./node_modules/.bin/gulp --production
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-source
   post:
