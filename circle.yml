@@ -11,7 +11,7 @@ machine:
     localhost: 127.0.0.1
 checkout:
   post:
-    - cp .env.testing .env
+    - cp .env.circle .env
 dependencies:
   pre:
     - echo "memory_limit = -1" > ~/.phpenv/versions/$(phpenv global)/etc/conf.d/memory.ini
