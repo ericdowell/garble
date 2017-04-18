@@ -55,4 +55,18 @@ class LoginController extends Controller
 
         return self::laravelLogin($request);
     }
+
+    /**
+     * Get the login username to be used by the controller.
+     *
+     * @return string
+     */
+    public function username()
+    {
+        if (isset($this->username)) {
+            return __FUNCTION__;
+        }
+
+        return 'email';
+    }
 }
