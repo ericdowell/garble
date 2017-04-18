@@ -4,7 +4,6 @@ namespace Garble\Tests\Browser;
 
 use Laravel\Dusk\Browser;
 use Garble\Tests\DuskTestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ExampleTest extends DuskTestCase
 {
