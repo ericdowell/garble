@@ -169,13 +169,14 @@ return [
         Collective\Html\HtmlServiceProvider::class,
         Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
         Barryvdh\Debugbar\ServiceProvider::class,
+        Laravel\Tinker\TinkerServiceProvider::class,
 
         /*
          * Application Service Providers...
          */
         Garble\Providers\AppServiceProvider::class,
-        Garble\Providers\BroadcastServiceProvider::class,
         Garble\Providers\AuthServiceProvider::class,
+        Garble\Providers\BroadcastServiceProvider::class,
         Garble\Providers\EventServiceProvider::class,
         Garble\Providers\RouteServiceProvider::class,
 
@@ -198,6 +199,8 @@ return [
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
         'Blade' => Illuminate\Support\Facades\Blade::class,
+        'Broadcast' => Illuminate\Support\Facades\Broadcast::class,
+        'Bus' => Illuminate\Support\Facades\Bus::class,
         'Cache' => Illuminate\Support\Facades\Cache::class,
         'Config' => Illuminate\Support\Facades\Config::class,
         'Cookie' => Illuminate\Support\Facades\Cookie::class,
