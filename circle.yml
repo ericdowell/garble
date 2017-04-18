@@ -20,6 +20,7 @@ dependencies:
     - sudo apt-get update && sudo apt-get install yarn
     - export PATH="$PATH:`yarn global bin`"
     - yarn
+    - npm rebuild node-sass
     - npm run dev
     - "./vendor/laravel/dusk/bin/chromedriver-linux":
         background: true
