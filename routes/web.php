@@ -15,7 +15,3 @@ Route::group(['middleware' => 'texts'], function () {
     Route::resource('post', 'PostsController');
     Route::resource('todo', 'ToDosController');
 });
-
-
-
-
