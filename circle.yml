@@ -20,7 +20,11 @@ dependencies:
     - sudo apt-get update && sudo apt-get install yarn
     - export PATH="$PATH:`yarn global bin`"
     - yarn
-    - ./node_modules/.bin/gulp --production
+    - npm run production
+    - "./vendor/laravel/dusk/bin/chromedriver-linux":
+        background: true
+    - "php artisan serve":
+        background: true
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
@@ -30,6 +34,7 @@ dependencies:
 test:
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - php artisan dusk
     - if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
 deployment:
   development:
