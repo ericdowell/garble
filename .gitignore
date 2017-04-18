@@ -1,6 +1,9 @@
 ## Folders
 node_modules/
 public/storage/
+public/css/
+public/fonts/
+public/js/
 vendor/
 
 ## Files
@@ -8,6 +11,7 @@ _ide_helper.php
 .phpstorm.meta.php
 Homestead.yaml
 Homestead.json
+public/mix-manifest.json
 
 ## Hidden Folders
 .idea/
