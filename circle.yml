@@ -1,12 +1,15 @@
 machine:
   php:
-    version: 7.0.7
+    version: 7.1.3
   node:
-    version: 6.9.3
+    version: 6.9.5
   timezone:
     America/Chicago
   hosts:
     localhost: 127.0.0.1
+  post:
+    - chromedriver:
+        background: true
 checkout:
   post:
     - cp .env.circle .env
@@ -20,7 +23,8 @@ dependencies:
     - sudo apt-get update && sudo apt-get install yarn
     - export PATH="$PATH:`yarn global bin`"
     - yarn
-    - ./node_modules/.bin/gulp --production
+    - npm rebuild node-sass
+    - npm run dev
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
@@ -28,6 +32,9 @@ dependencies:
     - php artisan migrate:install && php artisan migrate:refresh
     - php artisan db:seed
 test:
+  pre:
+    - "php artisan serve":
+        background: true
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
     - if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi

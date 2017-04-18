@@ -5,6 +5,7 @@ namespace Garble\Providers;
 use Garble\User;
 use Garble\Permission;
 use Garble\Policies\IsAdminUser;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -28,7 +29,7 @@ class AuthServiceProvider extends ServiceProvider
         $this->registerPolicies();
 
 //        foreach ($this->getPermissions() as $permission) {
-//            \Gate::define($permission->name, function ($user) use ($permission) {
+//            Gate::define($permission->name, function ($user) use ($permission) {
 //                /** @var User $user */
 //                if ($user->hasRole($permission->roles)) {
 //                    return true;
