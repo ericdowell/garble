@@ -18,6 +18,7 @@ class UsersTableSeeder extends Seeder
             $userInfo = [
                 'name' => 'Garble Admin',
                 'username' => 'garble',
+                'email' => 'garble@example.org',
                 'password' => Hash::make(env('APP_KEY')),
             ];
             /** @var User $user */
