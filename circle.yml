@@ -37,6 +37,7 @@ test:
         background: true
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - php artisan dusk
     - if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
 deployment:
   development:

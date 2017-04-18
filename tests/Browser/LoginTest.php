@@ -16,7 +16,7 @@ class LoginTest extends DuskTestCase
      *
      * @return void
      */
-    public function testExample()
+    public function testLoginUser()
     {
         $attributes = [
             'email' => 'garble@example.com',
