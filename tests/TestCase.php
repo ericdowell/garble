@@ -5,7 +5,7 @@ namespace Garble\Tests;
 use Illuminate\Contracts\Console\Kernel;
 use Illuminate\Foundation\Testing\TestCase as SupportTestCase;
 
-class TestCase extends SupportTestCase
+abstract class TestCase extends SupportTestCase
 {
     /**
      * The base URL to use while testing the application.

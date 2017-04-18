@@ -29,6 +29,6 @@ class CreateTodoTextTable extends Migration
      */
     public function down()
     {
-        Schema::drop('to_dos');
+        Schema::dropIfExists('to_dos');
     }
 }
