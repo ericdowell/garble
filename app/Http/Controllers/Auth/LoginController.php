@@ -31,6 +31,11 @@ class LoginController extends Controller
     protected $redirectTo = '/';
 
     /**
+     * @var string
+     */
+    protected $username;
+
+    /**
      * Create a new controller instance.
      *
      * @return void
@@ -63,10 +68,6 @@ class LoginController extends Controller
      */
     public function username()
     {
-        if (isset($this->username)) {
-            return __FUNCTION__;
-        }
-
-        return 'email';
+        return property_exists($this, 'username') ? $this->username : 'email';
     }
 }

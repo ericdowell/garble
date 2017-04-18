@@ -96,7 +96,7 @@ abstract class TextController extends Controller
      *
      * @param  \Garble\Http\Requests\TextsRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function storeModel(TextsRequest $request)
     {
@@ -108,8 +108,6 @@ abstract class TextController extends Controller
             }
         }
         $model = $this->modelInstance->create($modelAttributes);
-
-        $model->save();
 
         $attributes = [
             'slug' => $request->input('slug'),
@@ -133,9 +131,9 @@ abstract class TextController extends Controller
      */
     public function show($slug)
     {
-        ${$this->type} = Text::findBySlug($slug);
+        ${$this->type} = $instance = Text::findBySlug($slug);
 
-        return $this->render(compact($this->type));
+        return $this->render(compact($this->type, 'instance'));
     }
 
     /**
@@ -162,7 +160,7 @@ abstract class TextController extends Controller
      * @param  \Garble\Http\Requests\TextsRequest $request
      * @param  string                             $slug
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function updateModel(TextsRequest $request, $slug)
     {
@@ -193,7 +191,7 @@ abstract class TextController extends Controller
      *
      * @param  string $slug
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function destroy($slug)
     {
