@@ -6,7 +6,7 @@ machine:
   timezone:
     America/Chicago
   hosts:
-    localhost: 127.0.0.1
+    garble.vm: 127.0.0.1
   post:
     - chromedriver:
         background: true

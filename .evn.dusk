@@ -2,7 +2,7 @@ APP_ENV=local
 APP_KEY=base64:oPF0DoJcm8nOjTkN9vk3kZYw6Z0f+cP+poFKhtQZiFU=
 APP_DEBUG=true
 APP_LOG_LEVEL=debug
-APP_URL=http://localhost
+APP_URL=http://garble.vm
 
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
