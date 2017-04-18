@@ -5,7 +5,9 @@ namespace Garble\Http\Controllers;
 class HomeController extends Controller
 {
     /**
-     * HomeController constructor.
+     * Create a new controller instance.
+     *
+     * @return void
      */
     public function __construct()
     {
