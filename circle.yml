@@ -2,7 +2,7 @@ machine:
   php:
     version: 7.0.7
   node:
-    version: 6.9.3
+    version: 6.9.5
   timezone:
     America/Chicago
   hosts:
@@ -20,7 +20,7 @@ dependencies:
     - sudo apt-get update && sudo apt-get install yarn
     - export PATH="$PATH:`yarn global bin`"
     - yarn
-    - npm run production
+    - npm run dev
     - "./vendor/laravel/dusk/bin/chromedriver-linux":
         background: true
     - "php artisan serve":
