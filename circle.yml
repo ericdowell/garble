@@ -9,7 +9,7 @@ machine:
     localhost: 127.0.0.1
   post:
     - chromedriver:
-      background: true
+        background: true
 checkout:
   post:
     - cp .env.circle .env
@@ -28,15 +28,11 @@ dependencies:
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
-    - sudo ln -s /opt/circleci/.phpenv/shims/php /usr/local/bin/php
-    - sudo cp /opt/circleci/.phpenv/shims/php /usr/bin/php
     - php artisan key:generate
     - php artisan migrate:install && php artisan migrate:refresh
     - php artisan db:seed
 test:
   pre:
-    - "./vendor/laravel/dusk/bin/chromedriver-linux":
-        background: true
     - "php artisan serve":
         background: true
   override:
