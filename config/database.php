@@ -78,6 +78,17 @@ return [
             'prefix' => '',
         ],
 
+        'valet' => [
+            'driver' => 'mysql',
+            'host' => '127.0.01',
+            'database' => 'homestead',
+            'username' => 'root',
+            'password' => '',
+            'charset' => 'utf8',
+            'collation' => 'utf8_unicode_ci',
+            'prefix' => '',
+        ],
+
     ],
 
     /*
