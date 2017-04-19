@@ -1,6 +1,6 @@
 machine:
   php:
-    version: 7.1.3
+    version: 7.1.0
   node:
     version: 6.9.5
   timezone:
@@ -15,7 +15,6 @@ dependencies:
   pre:
     - echo "memory_limit = -1" > /opt/circleci/php/$(phpenv global)/etc/conf.d/memory.ini
     - sudo composer self-update
-    - gem install compass
     - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     - sudo apt-get update && sudo apt-get install yarn
