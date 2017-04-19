@@ -3,6 +3,8 @@ machine:
     version: 7.1.0
   node:
     version: 6.9.5
+  hosts:
+    garble.vm: 127.0.0.1
   timezone:
     America/Chicago
   post:
@@ -30,8 +32,6 @@ dependencies:
 test:
   pre:
     - "./vendor/laravel/dusk/bin/chromedriver-linux":
-        background: true
-    - "php artisan serve":
         background: true
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
