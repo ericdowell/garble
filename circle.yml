@@ -5,8 +5,6 @@ machine:
     version: 6.9.5
   timezone:
     America/Chicago
-  hosts:
-    garble.vm: 127.0.0.1
   post:
     - chromedriver:
         background: true
