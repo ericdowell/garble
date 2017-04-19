@@ -27,11 +27,13 @@ dependencies:
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
+    - sudo ln -s /opt/circleci/.phpenv/shims/php /usr/local/bin/php
+    - sudo cp /opt/circleci/.phpenv/shims/php /usr/bin/php
     - php artisan key:generate
     - php artisan migrate
 test:
   pre:
-    - php artisan serve --host=garble.vm --port=80:
+    - sudo php artisan serve --host=garble.vm --port=80:
         background: true
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
