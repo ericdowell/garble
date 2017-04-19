@@ -30,6 +30,8 @@ dependencies:
     - php artisan migrate
 test:
   pre:
+    - "./vendor/laravel/dusk/bin/chromedriver-linux":
+        background: true
     - "php artisan serve":
         background: true
   override:
