@@ -2,7 +2,7 @@ machine:
   php:
     version: 7.1.0
   node:
-    version: 6.9.5
+    version: 6.10.2
   hosts:
     garble.vm: 127.0.0.1
   timezone:
