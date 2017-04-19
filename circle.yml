@@ -5,6 +5,9 @@ machine:
     version: 6.9.5
   timezone:
     America/Chicago
+  post:
+    - chromedriver:
+        background: true
 checkout:
   post:
     - cp .env.circle .env
@@ -19,7 +22,7 @@ dependencies:
     - export PATH="$PATH:`yarn global bin`"
     - yarn
     - npm rebuild node-sass
-    - npm run dev
+    - npm run production
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
@@ -27,8 +30,6 @@ dependencies:
     - php artisan migrate
 test:
   pre:
-    - "./vendor/laravel/dusk/bin/chromedriver-linux":
-        background: true
     - "php artisan serve":
         background: true
   override:
