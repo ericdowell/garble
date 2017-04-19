@@ -29,8 +29,7 @@ dependencies:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
     - php artisan key:generate
-    - php artisan migrate:install && php artisan migrate:refresh
-    - php artisan db:seed
+    - php artisan migrate
 test:
   pre:
     - "php artisan serve":
