@@ -11,6 +11,7 @@ _ide_helper.php
 .phpstorm.meta.php
 Homestead.yaml
 Homestead.json
+phpunit.dusk.xml
 public/mix-manifest.json
 
 ## Hidden Folders

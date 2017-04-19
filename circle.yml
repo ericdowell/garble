@@ -1,12 +1,12 @@
 machine:
   php:
-    version: 7.1.3
+    version: 7.1.0
   node:
-    version: 6.9.5
+    version: 6.10.2
+  hosts:
+    garble.vm: 127.0.0.1
   timezone:
     America/Chicago
-  hosts:
-    localhost: 127.0.0.1
   post:
     - chromedriver:
         background: true
@@ -17,26 +17,27 @@ dependencies:
   pre:
     - echo "memory_limit = -1" > /opt/circleci/php/$(phpenv global)/etc/conf.d/memory.ini
     - sudo composer self-update
-    - gem install compass
     - curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
     - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
     - sudo apt-get update && sudo apt-get install yarn
     - export PATH="$PATH:`yarn global bin`"
     - yarn
     - npm rebuild node-sass
-    - npm run dev
+    - npm run production
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
+    - sudo ln -s /opt/circleci/.phpenv/shims/php /usr/local/bin/php
+    - sudo cp /opt/circleci/.phpenv/shims/php /usr/bin/php
     - php artisan key:generate
-    - php artisan migrate:install && php artisan migrate:refresh
-    - php artisan db:seed
+    - php artisan migrate
 test:
   pre:
-    - "php artisan serve":
+    - sudo php artisan serve --host=garble.vm --port=80:
         background: true
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    - php artisan dusk
     - if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
 deployment:
   development:
