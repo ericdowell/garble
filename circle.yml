@@ -5,9 +5,6 @@ machine:
     version: 6.9.5
   timezone:
     America/Chicago
-  post:
-    - chromedriver:
-        background: true
 checkout:
   post:
     - cp .env.circle .env
@@ -30,6 +27,8 @@ dependencies:
     - php artisan migrate
 test:
   pre:
+    - "./vendor/laravel/dusk/bin/chromedriver-linux":
+        background: true
     - "php artisan serve":
         background: true
   override:
