@@ -38,6 +38,8 @@ test:
   override:
     - php vendor/bin/phpunit --coverage-clover build/logs/clover.xml
     - php artisan dusk
+    - mkdir -p $CIRCLE_TEST_REPORTS/phpunit
+    - php vendor/bin/phpunit --log-junit $CIRCLE_TEST_REPORTS/phpunit/junit.xml tests
     - if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
 deployment:
   development:
