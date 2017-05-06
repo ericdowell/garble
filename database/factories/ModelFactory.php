@@ -13,11 +13,12 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Garble\User::class, function (Faker\Generator $faker) {
-    static $password;
+    static $password, $username;
 
     return [
         'name' => $faker->name,
         'email' => $faker->unique()->safeEmail,
+        'username' => $username ?: $faker->unique()->userName,
         'password' => $password ?: $password = bcrypt('secret'),
         'remember_token' => str_random(10),
     ];
