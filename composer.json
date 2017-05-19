@@ -26,6 +26,9 @@
         "classmap": [
             "database"
         ],
+        "files": [
+            "helpers/debug.php"
+        ],
         "psr-4": {
             "Garble\\": "app/"
         }
