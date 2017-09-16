@@ -7,7 +7,7 @@
 
 require('./bootstrap');
 
-const confirmDelete = function(link) {
+window.confirmDelete = function(link) {
     let message = confirm('Are you sure you want to delete the '+ link.dataset.title +' feature');
     if( message === true ) {
         return document.getElementById( link.dataset.formName ).submit();
@@ -15,6 +15,8 @@ const confirmDelete = function(link) {
         return false;
     }
 };
+
+window.Vue = require('vue');
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

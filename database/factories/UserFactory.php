@@ -1,18 +1,20 @@
 <?php
 
+use Faker\Generator as Faker;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
 |--------------------------------------------------------------------------
 |
-| Here you may define all of your model factories. Model factories give
-| you a convenient way to create models for testing and seeding your
-| database. Just tell the factory how a default model should look.
+| This directory should contain each of the model factory definitions for
+| your application. Factories provide a convenient way to generate new
+| model instances for testing / seeding your application's database.
 |
 */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(Garble\User::class, function (Faker\Generator $faker) {
+/* @var \Illuminate\Database\Eloquent\Factory $factory */
+$factory->define(Garble\User::class, function (Faker $faker) {
     static $password, $username;
 
     return [
@@ -24,20 +26,22 @@ $factory->define(Garble\User::class, function (Faker\Generator $faker) {
     ];
 });
 
-$factory->define(Garble\Note::class, function (Faker\Generator $faker) {
+$factory->define(Garble\Note::class, function (Faker $faker) {
     return [
         'user_id' => factory(Garble\User::class)->create()->id,
         'body' => $faker->paragraphs(),
     ];
 });
-$factory->define(Garble\Post::class, function (Faker\Generator $faker) {
+
+$factory->define(Garble\Post::class, function (Faker $faker) {
     return [
         'user_id' => factory(Garble\User::class)->create()->id,
         'title' => $faker->sentence,
         'body' => $faker->paragraph(),
     ];
 });
-$factory->define(Garble\ToDo::class, function (Faker\Generator $faker) {
+
+$factory->define(Garble\ToDo::class, function (Faker $faker) {
     return [
         'user_id' => factory(Garble\User::class)->create()->id,
         'title' => $faker->sentence,

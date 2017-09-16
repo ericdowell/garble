@@ -13,7 +13,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        'Garble\Events\SomeEvent' => [
+        'Garble\Events\Event' => [
             'Garble\Listeners\EventListener',
         ],
     ];
