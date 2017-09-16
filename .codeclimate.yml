@@ -9,6 +9,9 @@ ratings:
   paths:
     - "**.php"
 exclude_paths:
+  - "package-lock.json"
+  - "alias"
+  - "after.sh"
   - "bootstrap/*"
   - "database/*"
   - "resources/lang/*"
