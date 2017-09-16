@@ -18,6 +18,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \Garble\Http\Middleware\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Garble\Http\Middleware\TrustProxies::class,
     ];
 
     /**
@@ -40,6 +41,7 @@ class Kernel extends HttpKernel
             'throttle:60,1',
             'bindings',
         ],
+
         'texts' => [
             \Garble\Http\Middleware\CorrectTextSlug::class,
         ],
