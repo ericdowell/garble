@@ -4,7 +4,7 @@ if (! function_exists('app_trace')) {
     /**
      * @param int $backtrace
      * @param string $key
-     * @param boolean $exit
+     * @param bool $exit
      */
     function app_trace($backtrace = 2, $key = null, $exit = false)
     {
