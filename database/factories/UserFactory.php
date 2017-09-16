@@ -13,7 +13,7 @@ use Faker\Generator as Faker;
 |
 */
 
-/** @var \Illuminate\Database\Eloquent\Factory $factory */
+/* @var \Illuminate\Database\Eloquent\Factory $factory */
 $factory->define(Garble\User::class, function (Faker $faker) {
     static $password, $username;
 
