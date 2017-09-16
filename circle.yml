@@ -46,4 +46,4 @@ deployment:
   development:
     branch: master
     commands:
-      - echo "deploy key here"
+      - if [ -z ${FORGEDEPLOY+x} ]; then echo "FORGEDEPLOY not set"; else curl $FORGEDEPLOY; fi
