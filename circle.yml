@@ -2,7 +2,7 @@ machine:
   php:
     version: 7.1.6
   node:
-    version: 8.5.0
+    version: 8.6.0
   hosts:
     garble.vm: 127.0.0.1
   timezone:
@@ -18,8 +18,7 @@ dependencies:
     - echo "memory_limit = -1" > /opt/circleci/php/$(phpenv global)/etc/conf.d/memory.ini
     - sudo composer self-update
     - npm install
-    - npm rebuild node-sass
-    - npm run production
+    - npm run prod
   override:
     - composer install --no-interaction --optimize-autoloader --prefer-dist
   post:
