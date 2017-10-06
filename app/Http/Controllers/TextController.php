@@ -171,7 +171,11 @@ abstract class TextController extends Controller
         $model = $text->text;
         //Loop over fillable fields
         foreach ($model->getFillable() as $key) {
-            $model->{$key} = $request->input($key, false);
+            $input = $request->input($key);
+            if (is_null($input) && $model->hasCast($key, 'boolean')) {
+                $input = false;
+            }
+            $model->{$key} = $input;
         }
         $model->save();
 
