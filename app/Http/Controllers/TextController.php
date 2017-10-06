@@ -161,8 +161,9 @@ abstract class TextController extends Controller
     {
         $text = Text::findBySlug($slug);
 
-        if ($slug != $text->slug) {
-            $text->update(['slug' => $slug]);
+        $slugInput = $request->input('slug');
+        if ($slugInput != $text->slug) {
+            $text->update(['slug' => $slugInput]);
         }
         $text->text->update($this->getModelAttributes($request));
 
