@@ -5,16 +5,21 @@
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
             <div class="panel panel-default">
-                <div class="panel-heading">{{ $todo->text->title }}</div>
-
-                <div class="panel-body">
+                <div class="panel-heading">
+                    <strong>{{ $todo->text->title }}</strong> |
                     @if(Auth::user() && Auth::user()->id == $todo->user->id)
-                        <p>
-                            <a class="btn btn-link" href="{{ route($type.'.edit', $todo->slug) }}">Edit</a>
-                        </p>
+                        <a href="{{ route($type.'.edit', $todo->slug) }}" title="Edit {{ $todo->text->title }}">Edit</a>
                     @endif
-                    Assigned To: <strong>{{ $todo->user->name }}</strong>
-                    <p>Task Status: {{ $todo->text->completed ? 'Done' : 'Not Completed' }}</p>
+                </div>
+                <div class="panel-body">
+                    <strong>Task:</strong>
+                    <p>{{ $todo->text->completed ? 'Done' : 'Not Completed' }}</p>
+                    <strong>Assigned To:</strong>
+                    <p>{{ $todo->user->name }}</p>
+                    @if($todo->text->body)
+                    <strong>Body:</strong>
+                    <p>{{ $todo->text->body }}</p>
+                    @endif
                 </div>
             </div>
         </div>
