@@ -10,10 +10,10 @@ if (! function_exists('app_trace')) {
     {
         $trace = debug_backtrace();
         $caller = (! empty($trace[$backtrace])) ? $trace[$backtrace] : $trace[2];
+        if (is_string($key) && isset($caller[$key])) {
+            $caller = $caller[$key];
+        }
         if ($exit) {
-            if (is_string($key) && isset($caller[$key])) {
-                $caller = $caller[$key];
-            }
             dd($caller);
         }
         debug($caller);
