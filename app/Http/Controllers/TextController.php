@@ -102,10 +102,7 @@ abstract class TextController extends Controller
     {
         $modelAttributes = [];
         foreach ($this->modelInstance->getFillable() as $key) {
-            $input = $request->input($key);
-            if (! empty($input)) {
-                $modelAttributes[$key] = $input;
-            }
+            $modelAttributes[$key] = $request->input($key, false);
         }
         $model = $this->modelInstance->create($modelAttributes);
 
@@ -115,6 +112,7 @@ abstract class TextController extends Controller
             'text_id' => $model->id,
             'user_id' => $request->input('user_id'),
         ];
+        /** @var Text $text */
         $text = Text::create($attributes);
 
         $text->save();
@@ -165,23 +163,17 @@ abstract class TextController extends Controller
     public function updateModel(TextsRequest $request, $slug)
     {
         $text = Text::findBySlug($slug);
-        $attributes = [];
 
         if ($slug != $text->slug) {
             $text->update(['slug' => $slug]);
         }
-
         /** @var Model $model */
         $model = $text->text;
         //Loop over fillable fields
         foreach ($model->getFillable() as $key) {
-            $input = $request->input($key);
-            if (! empty($input)) {
-                $attributes[$key] = $input;
-            }
+            $model->{$key} = $request->input($key, false);
         }
-
-        $model->update($attributes);
+        $model->save();
 
         return $this->redirectToIndex();
     }

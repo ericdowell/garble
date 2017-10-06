@@ -4,29 +4,48 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">{{ $typeName }}</div>
-                <div class="panel-body">
-                    <ul>
+            <h1>{{ $typeName }}</h1>
+            <div class="table-responsive">
+                <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                    </thead>
+                    <tbody>
                     @if( $all->count() != 0 )
                     @foreach($all as $note)
-                        <li>
-                            <a href="{{ route($type.'.show', $note->slug ) }}" title="{{ str_limit($note->text->body, 20) }}">{{ str_limit($note->text->body, 20) }}</a>
+                        <tr>
+                            <td>
+                                <a href="{{ route($type.'.show', $note->slug ) }}" title="{{ str_limit($note->text->body, 20) }}">
+                                    {{ str_limit($note->text->body, 20) }}
+                                </a>
+                            </td>
+
                             @if(Auth::user() && Auth::user()->id == $note->user->id)
-                            <a class="btn btn-link" href="{{ route($type.'.edit', $note->slug) }}">Edit</a>
-                            @include('include.delete_form', ['title' => str_limit($note->text->body, 20), 'instance' => $note])
+                            <td><a class="btn btn-link" href="{{ route($type.'.edit', $note->slug) }}">Edit</a></td>
+                            <td>@include('include.delete_form', ['title' => str_limit($note->text->body, 20), 'instance' => $note])</td>
+                            @else
+                                <td></td>
+                                <td></td>
                             @endif
-                        </li>
+                        </tr>
                     @endforeach
                     @else
-                        <li>No {{ $typeName }} Found</li>
+                        <tr>
+                            <td>No {{ $typeName }} Found</td>
+                            <td></td>
+                            <td></td>
+                        </tr>
                     @endif
-                    </ul>
-                    @if(Auth::user())
-                    <a class="btn btn-primary" href="{{ route($type.'.create') }}">Create {{ $typeName }}</a>
-                    @endif
-                </div>
+                    </tbody>
+                </table>
             </div>
+            @if(Auth::user())
+            <a class="btn btn-primary" href="{{ route($type.'.create') }}">Create {{ $typeName }}</a>
+            @endif
         </div>
     </div>
 </div>

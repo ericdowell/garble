@@ -1,6 +1,7 @@
 {{ ($formName = 'form-'.$type.'-'.$instance->text->id) ? '':'' }}
 {{ ($linkOptions = [
-        'class' => 'btn btn-link',
+        'class' => 'btn btn-danger btn-sm',
+        'title' => $title,
         'onclick' => 'confirmDelete(this);',
         'data-title' => $title,
         'data-form-name' => $formName

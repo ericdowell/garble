@@ -1,0 +1,85 @@
+$unit: 15;
+
+/*--margin--*/
+.margin {
+  @extend .margin-sides;
+  @extend .margin-slates;
+}
+.margin-none {
+  margin: 0;
+}
+.margin-sides {
+  @extend .margin-left;
+  @extend .margin-right;
+}
+.margin-slates {
+  @extend .margin-top;
+  @extend .margin-bottom;
+}
+.margin-left {
+  margin-left: $unit;
+}
+.margin-right {
+  margin-right: $unit;
+}
+.margin-top {
+  margin-top: $unit;
+}
+.margin-bottom {
+  margin-bottom: $unit;
+}
+
+/*--padding--*/
+.padding {
+  @extend .padding-sides;
+  @extend .padding-slates;
+}
+.padding-none {
+  padding: 0;
+}
+.padding-sides {
+  @extend .padding-left;
+  @extend .padding-right;
+}
+.padding-slates {
+  @extend .padding-top;
+  @extend .padding-bottom;
+}
+.padding-left {
+  padding-left: $unit;
+}
+.padding-right {
+  padding-right: $unit;
+}
+.padding-top {
+  padding-top: $unit;
+}
+.padding-bottom {
+  padding-bottom: $unit;
+}
+
+/*--border--*/
+.border {
+  @extend .border-sides;
+  @extend .border-slates;
+}
+.border-sides {
+  @extend .border-left;
+  @extend .border-right;
+}
+.border-slates {
+  @extend .border-top;
+  @extend .border-bottom;
+}
+.border-left {
+  border-left: 1px solid #e8e9ea;
+}
+.border-right {
+  border-right: 1px solid #e8e9ea;
+}
+.border-top {
+  border-top: 1px solid #e8e9ea;
+}
+.border-bottom {
+  border-bottom: 1px solid #e8e9ea;
+}

@@ -9,6 +9,6 @@ class ToDosRequest extends TextsRequest
      */
     protected $rules = [
         'title' => 'required',
-        'completed' => 'required|boolean',
+        'completed' => 'sometimes|required|boolean',
     ];
 }
