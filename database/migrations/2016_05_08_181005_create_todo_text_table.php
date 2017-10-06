@@ -16,7 +16,7 @@ class CreateTodoTextTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->boolean('completed')->default(false);
-            $table->text('body');
+            $table->text('body')->nullable();
             $table->integer('user_id')->references('id')->on('users');
             $table->timestamps();
         });

@@ -100,14 +100,7 @@ abstract class TextController extends Controller
      */
     public function storeModel(TextsRequest $request)
     {
-        $modelAttributes = [];
-        foreach ($this->modelInstance->getFillable() as $key) {
-            $input = $request->input($key);
-            if (! empty($input)) {
-                $modelAttributes[$key] = $input;
-            }
-        }
-        $model = $this->modelInstance->create($modelAttributes);
+        $model = $this->modelInstance->create($this->getModelAttributes($request));
 
         $attributes = [
             'slug' => $request->input('slug'),
@@ -115,6 +108,8 @@ abstract class TextController extends Controller
             'text_id' => $model->id,
             'user_id' => $request->input('user_id'),
         ];
+
+        /** @var Text $text */
         $text = Text::create($attributes);
 
         $text->save();
@@ -165,23 +160,12 @@ abstract class TextController extends Controller
     public function updateModel(TextsRequest $request, $slug)
     {
         $text = Text::findBySlug($slug);
-        $attributes = [];
 
-        if ($slug != $text->slug) {
-            $text->update(['slug' => $slug]);
+        $slugInput = $request->input('slug');
+        if ($slugInput != $text->slug) {
+            $text->update(['slug' => $slugInput]);
         }
-
-        /** @var Model $model */
-        $model = $text->text;
-        //Loop over fillable fields
-        foreach ($model->getFillable() as $key) {
-            $input = $request->input($key);
-            if (! empty($input)) {
-                $attributes[$key] = $input;
-            }
-        }
-
-        $model->update($attributes);
+        $text->text->update($this->getModelAttributes($request));
 
         return $this->redirectToIndex();
     }
@@ -203,6 +187,26 @@ abstract class TextController extends Controller
         $text->destroy($text->slug);
 
         return $this->redirectToIndex();
+    }
+
+    /**
+     * @param \Garble\Http\Requests\TextsRequest $request
+     *
+     * @return array
+     */
+    protected function getModelAttributes(TextsRequest $request)
+    {
+        $modelAttributes = [];
+
+        foreach ($this->modelInstance->getFillable() as $key) {
+            $input = $request->input($key);
+            if (is_null($input) && $this->modelInstance->hasCast($key, 'boolean')) {
+                $input = false;
+            }
+            $modelAttributes[$key] = $input;
+        }
+
+        return $modelAttributes;
     }
 
     /**
