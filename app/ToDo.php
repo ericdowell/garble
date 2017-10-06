@@ -24,7 +24,7 @@ class ToDo extends Model
      * @var array
      */
     protected $casts = [
-        'completed' => 'boolean'
+        'completed' => 'boolean',
     ];
 
     /**
