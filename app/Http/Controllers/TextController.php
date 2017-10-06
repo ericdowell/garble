@@ -100,11 +100,7 @@ abstract class TextController extends Controller
      */
     public function storeModel(TextsRequest $request)
     {
-        $modelAttributes = [];
-        foreach ($this->modelInstance->getFillable() as $key) {
-            $modelAttributes[$key] = $request->input($key, false);
-        }
-        $model = $this->modelInstance->create($modelAttributes);
+        $model = $this->modelInstance->create($this->getModelAttributes($request));
 
         $attributes = [
             'slug' => $request->input('slug'),
@@ -112,6 +108,7 @@ abstract class TextController extends Controller
             'text_id' => $model->id,
             'user_id' => $request->input('user_id'),
         ];
+
         /** @var Text $text */
         $text = Text::create($attributes);
 
@@ -167,17 +164,7 @@ abstract class TextController extends Controller
         if ($slug != $text->slug) {
             $text->update(['slug' => $slug]);
         }
-        /** @var Model $model */
-        $model = $text->text;
-        //Loop over fillable fields
-        foreach ($model->getFillable() as $key) {
-            $input = $request->input($key);
-            if (is_null($input) && $model->hasCast($key, 'boolean')) {
-                $input = false;
-            }
-            $model->{$key} = $input;
-        }
-        $model->save();
+        $text->text->update($this->getModelAttributes($request));
 
         return $this->redirectToIndex();
     }
@@ -199,6 +186,26 @@ abstract class TextController extends Controller
         $text->destroy($text->slug);
 
         return $this->redirectToIndex();
+    }
+
+    /**
+     * @param \Garble\Http\Requests\TextsRequest $request
+     *
+     * @return array
+     */
+    protected function getModelAttributes(TextsRequest $request)
+    {
+        $modelAttributes = [];
+
+        foreach ($this->modelInstance->getFillable() as $key) {
+            $input = $request->input($key);
+            if (is_null($input) && $this->modelInstance->hasCast($key, 'boolean')) {
+                $input = false;
+            }
+            $modelAttributes[$key] = $input;
+        }
+
+        return $modelAttributes;
     }
 
     /**
