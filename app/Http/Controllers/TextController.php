@@ -295,7 +295,7 @@ abstract class TextController extends Controller
         $this->type = $type;
         $this->formAction = $action;
         $btnMessage = sprintf('%s %s', ucfirst($this->formAction), ucfirst($this->type));
-        $formHeader = ($action === 'update' ? ucfirst($this->formAction) : 'Create') . ' ' . ucfirst($this->type);
+        $formHeader = ($action === 'update' ? ucfirst($this->formAction) : 'Create').' '.ucfirst($this->type);
 
         $data = compact('type', 'btnMessage', 'action', 'formHeader');
 
