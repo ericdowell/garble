@@ -17,16 +17,16 @@
                                 <input
                                         id="email"
                                         type="email"
-                                        class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                                        name="email"
+                                        class="form-control{{ $errors->has('login') ? ' is-invalid' : '' }}"
+                                        name="login"
                                         value="{{ old('email') }}"
                                         required
                                         autofocus
                                 >
 
-                                @if ($errors->has('email'))
+                                @if ($errors->has('login'))
                                     <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
+                                        <strong>{{ $errors->first('login') }}</strong>
                                     </div>
                                 @endif
                             </div>
