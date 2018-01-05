@@ -4,14 +4,14 @@
 <div class="container">
     <div class="row">
         <div class="col-md-10 col-md-offset-1">
-            <div class="panel panel-default">
-                <div class="panel-heading">
+            <div class="card">
+                <div class="card-header">
                     <strong>{{ $todo->text->title }}</strong> |
                     @if(Auth::user() && Auth::user()->id == $todo->user->id)
                         <a href="{{ route($type.'.edit', $todo->slug) }}" title="Edit {{ $todo->text->title }}">Edit</a>
                     @endif
                 </div>
-                <div class="panel-body">
+                <div class="card-body">
                     <strong>Task:</strong>
                     <p>{{ $todo->text->completed ? 'Done' : 'Not Completed' }}</p>
                     <strong>Assigned To:</strong>

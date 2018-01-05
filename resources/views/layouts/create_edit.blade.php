@@ -4,9 +4,9 @@
     <div class="container">
         <div class="row">
             <div class="col-md-10 col-md-offset-1">
-                <div class="panel panel-default">
-                    <h1>{{ $formHeader }}</h1>
-                    <div class="panel-body">
+                <div class="card">
+                    <div class="card-header">{{ $formHeader }}</div>
+                    <div class="card-body">
                         {{ Form::model( $instance, $options ) }}
                         {{ Form::hidden('text_type', $type) }}
                         {{ Form::hidden('user_id', Auth::user()->id) }}

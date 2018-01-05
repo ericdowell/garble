@@ -23,7 +23,7 @@
                             <td><strong>{{ $todo->text->completed ? 'Yes' : 'No' }}</strong></td>
 
                             @if(Auth::user() && Auth::user()->id == $todo->user->id)
-                            <td><a href="{{ route($type.'.edit', $todo->slug) }}">Edit</a></td>
+                            <td><small><a class="btn btn-info btn-sm" href="{{ route($type.'.edit', $todo->slug) }}">Edit</a></small></td>
                             <td>@include('include.delete_form', ['title' => $todo->text->title , 'instance' => $todo])</td>
                             @else
                             <td></td>

@@ -25,11 +25,11 @@
                             </td>
 
                             @if(Auth::user() && Auth::user()->id == $note->user->id)
-                            <td><a class="btn btn-link" href="{{ route($type.'.edit', $note->slug) }}">Edit</a></td>
+                            <td><small><a class="btn btn-info btn-sm" href="{{ route($type.'.edit', $note->slug) }}">Edit</a></small></td>
                             <td>@include('include.delete_form', ['title' => str_limit($note->text->body, 20), 'instance' => $note])</td>
                             @else
-                                <td></td>
-                                <td></td>
+                            <td></td>
+                            <td></td>
                             @endif
                         </tr>
                     @endforeach
