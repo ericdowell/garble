@@ -16,10 +16,10 @@
                             <div class="col-lg-6">
                                 <input
                                         id="email"
-                                        type="email"
+                                        type="text"
                                         class="form-control{{ $errors->has('login') ? ' is-invalid' : '' }}"
                                         name="login"
-                                        value="{{ old('email') }}"
+                                        value="{{ old('login') }}"
                                         required
                                         autofocus
                                 >

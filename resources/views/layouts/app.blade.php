@@ -25,11 +25,21 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
 
+            <!-- Left Side Of Navbar -->
+            <div class="collapse navbar-collapse justify-content-start" id="navbarSupportedContent">
+                <ul class="nav navbar-nav">
+                    <li class="nav-item"><a href="{{ url('/home') }}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="{{ url('/note') }}" class="nav-link">Notes</a></li>
+                    <li class="nav-item"><a href="{{ url('/post') }}" class="nav-link">Posts</a></li>
+                    <li class="nav-item"><a href="{{ url('/todo') }}" class="nav-link">Todos</a></li>
+                </ul>
+            </div>
+
+            <!-- Right Side Of Navbar -->
             <div class="collapse navbar-collapse justify-content-end" id="navbarSupportedContent">
                 <ul class="navbar-nav">
                     @if (Auth::guest())
                         <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">Login</a></li>
-                        <li class="nav-item"><a href="{{ route('register') }}" class="nav-link">Register</a></li>
                     @else
                         <li class="nav-item dropdown">
                             <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown"
@@ -59,6 +69,6 @@
 </div>
 
 <!-- Scripts -->
-<script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>
