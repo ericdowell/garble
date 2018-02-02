@@ -40,4 +40,4 @@ deployment:
   development:
     branch: master
     commands:
-      - if [ -z ${FORGEDEPLOY+x} ]; then echo "FORGEDEPLOY not set"; else curl $FORGEDEPLOY; fi
+      - echo "Deploy script here"
