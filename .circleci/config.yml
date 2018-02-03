@@ -10,7 +10,7 @@ jobs:
       - run:
           name: Install PHP Dependencies/Extensions
           command: |
-            sudo apt-get install -y zlib1g-dev
+            sudo apt update && sudo apt-get install -y zlib1g-dev
             sudo docker-php-ext-install zip
       - run:
           name: Update Global Composer
@@ -86,7 +86,7 @@ jobs:
       - run:
           name: Install PHP Dependencies/Extensions
           command: |
-            sudo apt-get install -y libicu-dev zlib1g-dev
+            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev
             sudo docker-php-ext-configure intl
             sudo docker-php-ext-install intl
             sudo docker-php-ext-install zip
@@ -99,7 +99,7 @@ jobs:
           name: Run Unit Tests and Generate Code Coverage XML File
           command: |
             mkdir -p ~/phpunit
-            phpunit --log-junit ~/phpunit/junit.xml tests --coverage-clover build/logs/clover.xml
+            php vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests --coverage-clover build/logs/clover.xml
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
