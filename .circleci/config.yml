@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Install PHP Dependencies/Extensions
           command: |
-            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev xvfb
+            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev xvfb chromium
             sudo docker-php-ext-configure intl
             sudo docker-php-ext-install intl
             sudo docker-php-ext-install zip
