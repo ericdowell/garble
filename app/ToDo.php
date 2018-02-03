@@ -4,6 +4,26 @@ namespace Garble;
 
 use Illuminate\Database\Eloquent\Model;
 
+/**
+ * Garble\ToDo
+ *
+ * @property-read \Garble\User $user
+ * @mixin \Eloquent
+ * @property int $id
+ * @property string $title
+ * @property bool $completed
+ * @property string|null $body
+ * @property int $user_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\ToDo whereBody($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\ToDo whereCompleted($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\ToDo whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\ToDo whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\ToDo whereTitle($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\ToDo whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\ToDo whereUserId($value)
+ */
 class ToDo extends Model
 {
     /**

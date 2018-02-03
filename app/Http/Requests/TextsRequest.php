@@ -78,7 +78,7 @@ abstract class TextsRequest extends Request
     }
 
     /**
-     * @return void|Text
+     * @return null|Text
      */
     protected function getModel()
     {
@@ -86,5 +86,7 @@ abstract class TextsRequest extends Request
             return Text::findByCurrentSlug();
         } catch (ModelNotFoundException $error) {
         }
+
+        return null;
     }
 }
