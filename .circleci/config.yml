@@ -10,12 +10,11 @@ jobs:
       - run:
           name: Install PHP Dependencies/Extensions
           command: |
-            sudo apt-get install -y libicu-dev zlib1g-dev
-            sudo docker-php-ext-configure intl
-            sudo docker-php-ext-install intl
+            sudo apt-get install -y zlib1g-dev
             sudo docker-php-ext-install zip
-            sudo docker-php-ext-install mysqli
-            sudo docker-php-ext-install pdo_mysql
+      - run:
+          name: Update Global Composer
+          command: sudo composer self-update
       - run:
           name: Copy circle env file
           command: cp .env.circle .env
@@ -84,6 +83,15 @@ jobs:
       - run:
           name: Wait for MySQL
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run:
+          name: Install PHP Dependencies/Extensions
+          command: |
+            sudo apt-get install -y libicu-dev zlib1g-dev
+            sudo docker-php-ext-configure intl
+            sudo docker-php-ext-install intl
+            sudo docker-php-ext-install zip
+            sudo docker-php-ext-install mysqli
+            sudo docker-php-ext-install pdo_mysql
       - run:
           name: Run Database Migration
           command: php artisan migrate
