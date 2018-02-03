@@ -16,7 +16,7 @@ jobs:
       - run:
           name: Install PHP Dependencies/Extensions
           command: |
-            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev
+            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev xvfb
             sudo docker-php-ext-configure intl
             sudo docker-php-ext-install intl
             sudo docker-php-ext-install zip
@@ -79,22 +79,26 @@ jobs:
             if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]
             then
               echo "CODECLIMATE_REPO_TOKEN not set";
-              exit 1;
+              exit 0;
             else
               if ./vendor/bin/test-reporter
               then
                 exit 0;
               else
                 echo 'Nothing sent, failed';
-                exit 1;
+                exit 0;
               fi
             fi
       - run:
           name: Disable xdebug extension
           command: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - run:
-          name: Start Chrome Driver
-          command: vendor/laravel/dusk/bin/chromedriver-linux
+          name: Start xvfb
+          command: /usr/bin/Xvfb :0 -screen 0 2920x2580x24
+          background: true
+      - run:
+          name: Open Browsers
+          command: DISPLAY=:0 ./vendor/laravel/dusk/bin/chromedriver-linux
           background: true
       - run:
           name: Run Laravel Server
