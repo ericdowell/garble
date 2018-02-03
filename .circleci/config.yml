@@ -3,6 +3,12 @@ jobs:
   build:
     docker:
       - image: circleci/php:7.2-apache-stretch-node-browsers
+      - image: redis:latest
+      - image: mysql:5.7
+        environment:
+          - MYSQL_DATABASE=circle_test
+          - MYSQL_ALLOW_EMPTY_PASSWORD=true
+          - MYSQL_ROOT_HOST=%
     environment:
       TZ: "/usr/share/zoneinfo/America/Chicago"
     steps:
@@ -10,8 +16,12 @@ jobs:
       - run:
           name: Install PHP Dependencies/Extensions
           command: |
-            sudo apt update && sudo apt-get install -y zlib1g-dev
+            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev
+            sudo docker-php-ext-configure intl
+            sudo docker-php-ext-install intl
             sudo docker-php-ext-install zip
+            sudo docker-php-ext-install mysqli
+            sudo docker-php-ext-install pdo_mysql
       - run:
           name: Update Global Composer
           command: sudo composer self-update
@@ -48,50 +58,8 @@ jobs:
           name: Remove node_modules folder since it is no longer needed.
           command: rm -rf node_modules
       - run:
-          name: Create build folder
-          command: mkdir -p /home/circleci/build
-      - run:
-          name: tar the project folder
-          command: tar -zcf /home/circleci/build/build.tar.gz /home/circleci/project/
-      - run:
-          name: Make build folder in project root
-          command: mkdir -p build
-      - run:
-          name: Move build tar into build folder in project root
-          command: mv /home/circleci/build/build.tar.gz build/
-      - persist_to_workspace:
-          root: build
-          paths:
-            - build.tar.gz
-  unit:
-    docker:
-      - image: circleci/php:7.2-apache-stretch-node-browsers
-      - image: redis:latest
-      - image: mysql:5.7
-        environment:
-          - MYSQL_DATABASE=circle_test
-          - MYSQL_ALLOW_EMPTY_PASSWORD=true
-          - MYSQL_ROOT_HOST=%
-    environment:
-      TZ: "/usr/share/zoneinfo/America/Chicago"
-    steps:
-      - attach_workspace:
-          at: /tmp/build
-      - run:
-          name: Restore files from build job
-          command: tar -zxf /tmp/build/build.tar.gz -C /
-      - run:
           name: Wait for MySQL
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
-      - run:
-          name: Install PHP Dependencies/Extensions
-          command: |
-            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev
-            sudo docker-php-ext-configure intl
-            sudo docker-php-ext-install intl
-            sudo docker-php-ext-install zip
-            sudo docker-php-ext-install mysqli
-            sudo docker-php-ext-install pdo_mysql
       - run:
           name: Run Database Migration
           command: php artisan migrate
@@ -99,7 +67,8 @@ jobs:
           name: Run Unit Tests and Generate Code Coverage XML File
           command: |
             mkdir -p ~/phpunit
-            php vendor/bin/phpunit --log-junit ~/phpunit/junit.xml tests --coverage-clover build/logs/clover.xml
+            mkdir -p build/logs
+            php vendor/bin/phpunit --log-junit ~/phpunit/junit.xml --coverage-clover build/logs/clover.xml
       - store_test_results:
           path: ~/phpunit
       - store_artifacts:
@@ -121,11 +90,11 @@ jobs:
               fi
             fi
       - run:
-          name: Remove xdebug extension
+          name: Disable xdebug extension
           command: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
       - run:
           name: Start Chrome Driver
-          command: ./vendor/laravel/dusk/bin/chromedriver-linux
+          command: vendor/laravel/dusk/bin/chromedriver-linux
           background: true
       - run:
           name: Run Laravel Server
@@ -134,11 +103,3 @@ jobs:
       - run:
           name: Run Laravel Dusk Tests
           command: php artisan dusk
-workflows:
-  version: 2
-  build_test_deploy:
-    jobs:
-      - build
-      - unit:
-          requires:
-            - build
