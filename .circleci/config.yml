@@ -10,12 +10,12 @@ jobs:
       - run:
           name: Install PHP Dependencies/Extensions
           comand: |
-              sudo apt-get install -y libicu-dev zlib1g-dev \
-               && sudo docker-php-ext-configure intl \
-               && sudo docker-php-ext-install intl \
-               && sudo docker-php-ext-install zip \
-               && sudo docker-php-ext-install mysqli \
-               && sudo docker-php-ext-install pdo_mysql
+            sudo apt-get install -y libicu-dev zlib1g-dev \
+             && sudo docker-php-ext-configure intl \
+             && sudo docker-php-ext-install intl \
+             && sudo docker-php-ext-install zip \
+             && sudo docker-php-ext-install mysqli \
+             && sudo docker-php-ext-install pdo_mysql
       - run:
           name: Copy circle env file
           command: cp .env.circle .env
