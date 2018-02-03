@@ -83,6 +83,7 @@ jobs:
           command: tar -zxf /tmp/build/build.tar.gz -C /
       - run:
           name: Wait for MySQL
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
           name: Run Database Migration
           command: php artisan migrate
