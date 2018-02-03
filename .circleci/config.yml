@@ -1,0 +1,100 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.2-apache-stretch-node-browsers
+    environment:
+      TZ: "/usr/share/zoneinfo/America/Chicago"
+    steps:
+      - checkout
+      - run: cp .env.circle .env
+      - run: npm install
+      - run: npm run prod
+      - run: composer install --no-interaction --optimize-autoloader --prefer-dist
+      - run: php artisan key:generate
+      - run:
+          name: Remove node_modules folder since it is no longer needed.
+          command: rm -rf node_modules
+      - run:
+          name: Create build folder
+          command: mkdir -p /home/circleci/build
+      - run:
+          name: tar the project folder
+          command: tar -zcf /home/circleci/build/build.tar.gz /home/circleci/project/
+      - run:
+          name: Make build folder in project root
+          command: mkdir -p build
+      - run:
+          name: Move build tar into build folder in project root
+          command: mv /home/circleci/build/build.tar.gz build/
+      - persist_to_workspace:
+          root: build
+          paths:
+            - build.tar.gz
+  unit:
+    docker:
+      - image: circleci/php:7.2-apache-stretch-node-browsers
+      - image: redis:latest
+      - image: mysql:5.7
+        environment:
+          - MYSQL_DATABASE=circle_test
+          - MYSQL_ALLOW_EMPTY_PASSWORD=true
+          - MYSQL_ROOT_HOST=%
+    environment:
+      TZ: "/usr/share/zoneinfo/America/Chicago"
+    steps:
+      - attach_workspace:
+          at: /tmp/build
+      - run: tar -zxf /tmp/build/build.tar.gz -C /
+      - run:
+          name: Wait for MySQL
+      - run:
+          name: Run Database Migration
+          command: php artisan migrate
+      - run:
+          name: Run Unit Tests and Generate Code Coverage XML File
+          command: |
+            mkdir -p ~/phpunit
+            phpunit --log-junit ~/phpunit/junit.xml tests --coverage-clover build/logs/clover.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+      - run:
+          name: Attempt to Send Code Coverage XML File
+          command: |
+            if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]
+            then
+              echo "CODECLIMATE_REPO_TOKEN not set";
+              exit 1;
+            else
+              if ./vendor/bin/test-reporter
+              then
+                exit 0;
+              else
+                echo 'Nothing sent, failed';
+                exit 1;
+              fi
+            fi
+      - run:
+          name: Remove xdebug extension
+          command: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - run:
+           name: Start Chrome Driver
+           command: ./vendor/laravel/dusk/bin/chromedriver-linux
+           background: true
+      - run:
+         name: Run Laravel Server
+         command: php artisan serve
+         background: true
+      - run:
+          name: Run Laravel Dusk Tests
+          command: php artisan dusk
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build
+      - unit:
+          requires:
+            - build
