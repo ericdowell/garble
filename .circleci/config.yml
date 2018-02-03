@@ -20,8 +20,8 @@ jobs:
           name: Copy circle env file
           command: cp .env.circle .env
       - restore_cache:
-        keys:
-          - npm-install-build-{{ checksum "package-lock.json" }}
+          keys:
+            - npm-install-build-{{ checksum "package-lock.json" }}
       - run:
           name: Install NPM Dependencies
           command: npm install
