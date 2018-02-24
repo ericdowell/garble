@@ -5,11 +5,11 @@ namespace Garble\Tests\Browser;
 use Garble\User;
 use Laravel\Dusk\Browser;
 use Garble\Tests\DuskTestCase;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class LoginTest extends DuskTestCase
 {
-    use DatabaseMigrations;
+    use RefreshDatabase;
 
     /**
      * A Dusk test example.
@@ -28,7 +28,7 @@ class LoginTest extends DuskTestCase
                     ->type('login', $user->email)
                     ->type('password', 'secret')
                     ->press('Login')
-                    ->assertPathIs('/home')
+                    ->assertRouteIs('home.index')
                     ->clickLink($user->name)
                     ->clickLink('Logout');
 
@@ -36,7 +36,7 @@ class LoginTest extends DuskTestCase
                     ->type('login', $user->username)
                     ->type('password', 'secret')
                     ->press('Login')
-                    ->assertPathIs('/home')
+                    ->assertRouteIs('home.index')
                     ->clickLink($user->name)
                     ->clickLink('Logout');
         });

@@ -102,7 +102,7 @@ jobs:
           background: true
       - run:
           name: Run Laravel Server
-          command: php artisan serve
+          command: php artisan serve --port=80
           background: true
       - run:
           name: Run Laravel Dusk Tests
