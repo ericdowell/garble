@@ -5,7 +5,7 @@ namespace Garble;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Garble\Post
+ * Garble\Post.
  *
  * @property-read \Garble\User $user
  * @mixin \Eloquent
