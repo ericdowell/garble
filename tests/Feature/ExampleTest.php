@@ -1,8 +1,9 @@
 <?php
 
-namespace Garble\Tests\Feature;
+namespace Tests\Feature;
 
-use Garble\Tests\TestCase;
+use Tests\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ExampleTest extends TestCase
 {

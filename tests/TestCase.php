@@ -1,6 +1,6 @@
 <?php
 
-namespace Garble\Tests;
+namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 

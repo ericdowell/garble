@@ -1,6 +1,6 @@
 <?php
 
-namespace Garble\Tests\Browser\Pages;
+namespace Tests\Browser\Pages;
 
 use Laravel\Dusk\Browser;
 

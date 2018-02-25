@@ -1,9 +1,9 @@
 <?php
 
-namespace Garble\Tests\Browser;
+namespace Tests\Browser;
 
+use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Garble\Tests\DuskTestCase;
 
 class HomeTest extends DuskTestCase
 {
