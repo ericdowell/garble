@@ -1,6 +1,6 @@
 <?php
 
-namespace Garble\Tests;
+namespace Tests;
 
 use Laravel\Dusk\TestCase as BaseTestCase;
 use Facebook\WebDriver\Chrome\ChromeOptions;

@@ -1,10 +1,10 @@
 <?php
 
-namespace Garble\Tests\Browser;
+namespace Tests\Browser;
 
 use Garble\User;
+use Tests\DuskTestCase;
 use Laravel\Dusk\Browser;
-use Garble\Tests\DuskTestCase;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LoginTest extends DuskTestCase

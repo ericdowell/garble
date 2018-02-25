@@ -1,8 +1,8 @@
 <?php
 
-namespace Garble\Tests\Feature;
+namespace Tests\Feature;
 
-use Garble\Tests\TestCase;
+use Tests\TestCase;
 
 class ExampleTest extends TestCase
 {
