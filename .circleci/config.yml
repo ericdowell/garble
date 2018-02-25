@@ -76,19 +76,7 @@ jobs:
       - run:
           name: Attempt to Send Code Coverage XML File
           command: |
-            if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]
-            then
-              echo "CODECLIMATE_REPO_TOKEN not set";
-              exit 0;
-            else
-              if ./vendor/bin/test-reporter
-              then
-                exit 0;
-              else
-                echo 'Nothing sent, failed';
-                exit 0;
-              fi
-            fi
+            if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
       - run:
           name: Disable xdebug extension
           command: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
