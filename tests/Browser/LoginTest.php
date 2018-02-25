@@ -5,11 +5,11 @@ namespace Garble\Tests\Browser;
 use Garble\User;
 use Laravel\Dusk\Browser;
 use Garble\Tests\DuskTestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LoginTest extends DuskTestCase
 {
-    use RefreshDatabase;
+    use DatabaseMigrations;
 
     /**
      * A Dusk test example.
@@ -27,6 +27,8 @@ class LoginTest extends DuskTestCase
         ]);
 
         $this->browse(function (Browser $browser) use ($user) {
+            $browser->resize( 1280, 720 );
+
             $browser->visitRoute('login')
                     ->type('login', $user->email)
                     ->type('password', 'secret')
