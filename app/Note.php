@@ -5,7 +5,7 @@ namespace Garble;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Garble\Note
+ * Garble\Note.
  *
  * @property-read \Garble\User $user
  * @mixin \Eloquent

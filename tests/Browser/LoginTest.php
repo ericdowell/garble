@@ -27,7 +27,7 @@ class LoginTest extends DuskTestCase
         ]);
 
         $this->browse(function (Browser $browser) use ($user) {
-            $browser->resize( 1280, 720 );
+            $browser->resize(1280, 720);
 
             $browser->visitRoute('login')
                     ->type('login', $user->email)

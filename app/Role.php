@@ -5,7 +5,7 @@ namespace Garble;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Garble\Role
+ * Garble\Role.
  *
  * @property-read \Illuminate\Database\Eloquent\Collection|\Garble\Permission[] $permissions
  * @mixin \Eloquent

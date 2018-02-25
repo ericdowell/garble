@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
 /**
- * Garble\Text
+ * Garble\Text.
  *
  * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $text
  * @property-read \Garble\User $user

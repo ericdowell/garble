@@ -86,7 +86,5 @@ abstract class TextsRequest extends Request
             return Text::findByCurrentSlug();
         } catch (ModelNotFoundException $error) {
         }
-
-        return null;
     }
 }
