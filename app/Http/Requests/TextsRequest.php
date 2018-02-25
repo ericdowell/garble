@@ -78,7 +78,7 @@ abstract class TextsRequest extends Request
     }
 
     /**
-     * @return void|Text
+     * @return null|Text
      */
     protected function getModel()
     {

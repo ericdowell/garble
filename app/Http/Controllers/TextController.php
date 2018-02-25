@@ -6,6 +6,7 @@ use Route;
 use Garble\Text;
 use Garble\Http\Requests\TextsRequest;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class TextController extends Controller
@@ -37,7 +38,7 @@ abstract class TextController extends Controller
      */
     protected $model;
     /**
-     * @var Model
+     * @var Model|Builder
      */
     protected $modelInstance;
     /**
@@ -73,6 +74,7 @@ abstract class TextController extends Controller
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
     public function index()
     {
@@ -83,6 +85,7 @@ abstract class TextController extends Controller
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
     public function create()
     {
@@ -123,6 +126,7 @@ abstract class TextController extends Controller
      * @param  string $slug
      *
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
     public function show($slug)
     {
@@ -137,6 +141,7 @@ abstract class TextController extends Controller
      * @param  string $slug
      *
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
     public function edit($slug)
     {
@@ -226,11 +231,12 @@ abstract class TextController extends Controller
     }
 
     /**
-     * @param $data
+     * @param array $data
      *
      * @return \Illuminate\Http\Response
+     * @throws \Throwable
      */
-    protected function render($data = [])
+    protected function render(array $data = [])
     {
         $html = view($this->template, $data, $this->mergeData)->render();
 
@@ -250,9 +256,8 @@ abstract class TextController extends Controller
     }
 
     /**
-     * @throws ModelNotFoundException
-     *
      * @return $this
+     * @throws ModelNotFoundException
      */
     protected function setupModel()
     {

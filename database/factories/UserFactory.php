@@ -1,5 +1,9 @@
 <?php
 
+use Garble\Note;
+use Garble\Post;
+use Garble\ToDo;
+use Garble\User;
 use Faker\Generator as Faker;
 
 /*
@@ -14,7 +18,7 @@ use Faker\Generator as Faker;
 */
 
 /* @var \Illuminate\Database\Eloquent\Factory $factory */
-$factory->define(Garble\User::class, function (Faker $faker) {
+$factory->define(User::class, function (Faker $faker) {
     static $password, $username;
 
     return [
@@ -26,24 +30,24 @@ $factory->define(Garble\User::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(Garble\Note::class, function (Faker $faker) {
+$factory->define(Note::class, function (Faker $faker) {
     return [
-        'user_id' => factory(Garble\User::class)->create()->id,
+        'user_id' => factory(User::class)->create()->id,
         'body' => $faker->paragraphs(),
     ];
 });
 
-$factory->define(Garble\Post::class, function (Faker $faker) {
+$factory->define(Post::class, function (Faker $faker) {
     return [
-        'user_id' => factory(Garble\User::class)->create()->id,
+        'user_id' => factory(User::class)->create()->id,
         'title' => $faker->sentence,
         'body' => $faker->paragraph(),
     ];
 });
 
-$factory->define(Garble\ToDo::class, function (Faker $faker) {
+$factory->define(ToDo::class, function (Faker $faker) {
     return [
-        'user_id' => factory(Garble\User::class)->create()->id,
+        'user_id' => factory(User::class)->create()->id,
         'title' => $faker->sentence,
         'completed' => $faker->boolean(),
     ];

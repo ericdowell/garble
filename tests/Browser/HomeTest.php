@@ -11,6 +11,8 @@ class HomeTest extends DuskTestCase
      * A basic browser test example.
      *
      * @return void
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function testHomepageRendering()
     {

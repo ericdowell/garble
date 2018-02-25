@@ -1,0 +1,97 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/php:7.2-zts-node-browsers
+      - image: redis:latest
+      - image: mysql:5.7
+        environment:
+          - MYSQL_DATABASE=circle_test
+          - MYSQL_ALLOW_EMPTY_PASSWORD=true
+          - MYSQL_ROOT_HOST=%
+    environment:
+      TZ: "/usr/share/zoneinfo/America/Chicago"
+    steps:
+      - checkout
+      - run:
+          name: Install PHP Dependencies/Extensions
+          command: |
+            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev xvfb chromium
+            sudo docker-php-ext-configure intl
+            sudo docker-php-ext-install intl
+            sudo docker-php-ext-install zip
+            sudo docker-php-ext-install mysqli
+            sudo docker-php-ext-install pdo_mysql
+      - run:
+          name: Update Global Composer
+          command: sudo composer self-update
+      - run:
+          name: Copy circle env file
+          command: cp .env.circle .env
+      - restore_cache:
+          keys:
+            - npm-install-build-{{ checksum "package-lock.json" }}
+      - run:
+          name: Install NPM Dependencies
+          command: npm install
+      - save_cache:
+          key: npm-install-build-{{ checksum "package-lock.json" }}
+          paths:
+            - node_modules
+      - run:
+          name: Compile assets
+          command: npm run prod
+      - restore_cache:
+          keys:
+            - composer-install-build-{{ checksum "composer.lock" }}
+      - run:
+          name: Install PHP Dependencies
+          command: composer install --no-interaction --optimize-autoloader --prefer-dist
+      - save_cache:
+          key: composer-install-build-{{ checksum "composer.lock" }}
+          paths:
+            - vendor
+      - run:
+          name: Generate App Key
+          command: php artisan key:generate
+      - run:
+          name: Remove node_modules folder since it is no longer needed.
+          command: rm -rf node_modules
+      - run:
+          name: Wait for MySQL
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
+      - run:
+          name: Run Database Migration
+          command: php artisan migrate
+      - run:
+          name: Run Unit Tests and Generate Code Coverage XML File
+          command: |
+            mkdir -p ~/phpunit
+            mkdir -p build/logs
+            php vendor/bin/phpunit --log-junit ~/phpunit/junit.xml --coverage-clover build/logs/clover.xml
+      - store_test_results:
+          path: ~/phpunit
+      - store_artifacts:
+          path: ~/phpunit
+      - run:
+          name: Attempt to Send Code Coverage XML File
+          command: |
+            if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
+      - run:
+          name: Disable xdebug extension
+          command: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+      - run:
+          name: Start xvfb
+          command: /usr/bin/Xvfb :0 -screen 0 2920x2580x24
+          background: true
+      - run:
+          name: Open Browsers
+          command: DISPLAY=:0 ./vendor/laravel/dusk/bin/chromedriver-linux
+          background: true
+      - run:
+          name: Run Laravel Server
+          command: sudo php artisan serve --port=80
+          background: true
+      - run:
+          name: Run Laravel Dusk Tests
+          command: php artisan dusk

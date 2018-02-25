@@ -15,26 +15,33 @@ class LoginTest extends DuskTestCase
      * A Dusk test example.
      *
      * @return void
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function testLoginUser()
     {
         /** @var User $user */
-        $user = factory(User::class)->create(['email' => 'garble@example.net', 'username' => 'garble-test']);
+        $user = factory(User::class)->create([
+            'email' => 'garble@example.net',
+            'username' => 'garble-test',
+        ]);
 
         $this->browse(function (Browser $browser) use ($user) {
-            $browser->visit('/login')
+            $browser->resize(1280, 720);
+
+            $browser->visitRoute('login')
                     ->type('login', $user->email)
                     ->type('password', 'secret')
                     ->press('Login')
-                    ->assertPathIs('/home')
+                    ->assertRouteIs('home.index')
                     ->clickLink($user->name)
                     ->clickLink('Logout');
 
-            $browser->visit('/login')
+            $browser->visitRoute('login')
                     ->type('login', $user->username)
                     ->type('password', 'secret')
                     ->press('Login')
-                    ->assertPathIs('/home')
+                    ->assertRouteIs('home.index')
                     ->clickLink($user->name)
                     ->clickLink('Logout');
         });

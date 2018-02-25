@@ -17,18 +17,19 @@
                                 <input
                                         id="email"
                                         type="text"
-                                        class="form-control{{ $errors->has('login') ? ' is-invalid' : '' }}"
+                                        class="form-control{{ $errors->hasAny(['username', 'email', 'login']) ? ' is-invalid' : '' }}"
                                         name="login"
                                         value="{{ old('login') }}"
                                         required
                                         autofocus
                                 >
-
-                                @if ($errors->has('login'))
-                                    <div class="invalid-feedback">
-                                        <strong>{{ $errors->first('login') }}</strong>
-                                    </div>
-                                @endif
+                                @foreach (['username', 'email', 'login'] as $field)
+                                    @if ($errors->has($field))
+                                        <div class="invalid-feedback">
+                                            <strong>{{ $errors->first($field) }}</strong>
+                                        </div>
+                                    @endif
+                                @endforeach
                             </div>
                         </div>
 

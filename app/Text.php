@@ -5,6 +5,27 @@ namespace Garble;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Collection;
 
+/**
+ * Garble\Text.
+ *
+ * @property-read \Illuminate\Database\Eloquent\Model|\Eloquent $text
+ * @property-read \Garble\User $user
+ * @mixin \Eloquent
+ * @property int $id
+ * @property string $slug
+ * @property string $text_type
+ * @property int $text_id
+ * @property int $user_id
+ * @property \Carbon\Carbon|null $created_at
+ * @property \Carbon\Carbon|null $updated_at
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\Text whereCreatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\Text whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\Text whereSlug($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\Text whereTextId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\Text whereTextType($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\Text whereUpdatedAt($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\Garble\Text whereUserId($value)
+ */
 class Text extends Model
 {
     /**
