@@ -13,7 +13,7 @@ class CreatePostTextTable extends Migration
     public function up()
     {
         Schema::create('posts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('title');
             $table->text('body');
             $table->integer('user_id')->references('id')->on('users');
