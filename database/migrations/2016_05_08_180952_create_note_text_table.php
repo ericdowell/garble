@@ -13,7 +13,7 @@ class CreateNoteTextTable extends Migration
     public function up()
     {
         Schema::create('notes', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->text('body');
             $table->integer('user_id')->references('id')->on('users');
             $table->timestamps();

@@ -13,10 +13,9 @@ class CreateTextTable extends Migration
     public function up()
     {
         Schema::create('texts', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->string('slug')->unique();
-            $table->string('text_type');
-            $table->integer('text_id')->unsigned();
+            $table->morphs('text');
             $table->integer('user_id')->references('id')->on('users');
             $table->timestamps();
         });
