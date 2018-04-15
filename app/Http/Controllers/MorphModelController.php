@@ -2,10 +2,15 @@
 
 namespace Garble\Http\Controllers;
 
+use Throwable;
+use Illuminate\Http\Response;
+use Illuminate\Support\Collection;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Routing\Route as CurrentRoute;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 abstract class MorphModelController extends Controller
@@ -51,6 +56,16 @@ abstract class MorphModelController extends Controller
      * @var string
      */
     protected $morphModel;
+
+    /**
+     * @var bool
+     */
+    protected $grouped = false;
+
+    /**
+     * @var string
+     */
+    protected $groupName;
 
     /**
      * @var array
@@ -104,7 +119,11 @@ abstract class MorphModelController extends Controller
      */
     public function create()
     {
-        $options = ['route' => sprintf('%s.%s', $this->type, $this->formAction)];
+        $route = sprintf('%s.%s', $this->type, $this->formAction);
+        if ($this->grouped) {
+            $route = sprintf('%s.%s.%s', $this->getGroupName(), $this->type, $this->formAction);
+        }
+        $options = compact('route');
 
         return $this->render(compact('options'));
     }
@@ -122,29 +141,43 @@ abstract class MorphModelController extends Controller
 
         $morphType = $this->getMorphType();
 
-        $instance = forward_static_call([$this->morphModel, 'create'], [
-            'slug' => $request->input('slug'),
+        $attributes = array_merge($this->beforeStoreModel($request), [
             "{$morphType}_type" => $this->type,
             "{$morphType}_id" => $model->id,
-            'user_id' => $request->input('user_id'),
         ]);
 
-        $instance->save();
+        $instance = forward_static_call([$this->morphModel, 'create'], $attributes);
+
+        if (! $instance instanceof Model) {
+            return redirect()->back()->withInput()->withErrors('Something went wrong.');
+        }
 
         return $this->redirectToIndex();
     }
 
     /**
+     * @param \Illuminate\Foundation\Http\FormRequest $request
+     * @return array
+     */
+    protected function beforeStoreModel(FormRequest $request): array
+    {
+        return [
+            'slug' => $request->input('slug'),
+            'user_id' => $request->input('user_id'),
+        ];
+    }
+
+    /**
      * Display the specified resource.
      *
-     * @param  string $slug
+     * @param  mixed $id
      *
      * @return \Illuminate\Http\Response
      * @throws \Throwable
      */
-    public function show($slug)
+    public function show($id)
     {
-        ${$this->type} = $instance = $this->findMorphModel($slug);
+        ${$this->type} = $instance = $this->findMorphModel($id);
 
         return $this->render(compact($this->type, 'instance'));
     }
@@ -152,16 +185,20 @@ abstract class MorphModelController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  string $slug
+     * @param  mixed $id
      *
-     * @return \Illuminate\Http\Response
-     * @throws \Throwable
+     * @return Response
+     * @throws Throwable
      */
-    public function edit($slug)
+    public function edit($id): Response
     {
-        $instance = $this->findMorphModel($slug);
+        $instance = $this->findMorphModel($id);
+        $route = sprintf('%s.%s', $this->type, $this->formAction);
+        if ($this->grouped) {
+            $route = sprintf('%s.%s.%s', $this->getGroupName(), $this->type, $this->formAction);
+        }
         $options = [
-            'route' => [sprintf('%s.%s', $this->type, $this->formAction), $instance->slug],
+            'route' => [$route, $instance->getKey()],
             'method' => 'put',
         ];
 
@@ -171,49 +208,59 @@ abstract class MorphModelController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Foundation\Http\FormRequest $request
-     * @param  string $slug
+     * @param  FormRequest $request
+     * @param  mixed $id
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function updateModel(FormRequest $request, $slug)
+    public function updateModel(FormRequest $request, $id): RedirectResponse
     {
-        $instance = $this->findMorphModel($slug);
+        $instance = $this->findMorphModel($id);
 
-        $slugInput = $request->input('slug');
-        if ($slugInput != $instance->slug) {
-            $instance->update(['slug' => $slugInput]);
-        }
+        $this->beforeModelUpdate($request, $instance);
         $instance->{$this->getMorphType()}->update($this->getModelAttributes($request));
 
         return $this->redirectToIndex();
     }
 
     /**
+     * @param \Illuminate\Foundation\Http\FormRequest $request
+     * @param Model $instance
+     */
+    protected function beforeModelUpdate(FormRequest $request, Model $instance)
+    {
+        $slugInput = $request->input('slug');
+        if ($slugInput != $instance->slug) {
+            $instance->update(['slug' => $slugInput]);
+        }
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
-     * @param  string $slug
+     * @param  mixed $id
      *
-     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * @return RedirectResponse
+     * @throws Throwable
      */
-    public function destroy($slug)
+    public function destroy($id): RedirectResponse
     {
-        $instance = $this->findMorphModel($slug);
+        $instance = $this->findMorphModel($id);
         /** @var Model $model */
         $model = $instance->{$this->getMorphType()};
 
-        $model->destroy($model->id);
-        $instance->destroy($instance->slug);
+        $model->delete();
+        $instance->delete();
 
         return $this->redirectToIndex();
     }
 
     /**
-     * @param \Illuminate\Foundation\Http\FormRequest $request
+     * @param FormRequest $request
      *
      * @return array
      */
-    protected function getModelAttributes(FormRequest $request)
+    protected function getModelAttributes(FormRequest $request): array
     {
         $modelAttributes = [];
 
@@ -229,17 +276,17 @@ abstract class MorphModelController extends Controller
     }
 
     /**
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
-    protected function redirectToIndex()
+    protected function redirectToIndex(): RedirectResponse
     {
         return redirect()->route($this->type.'.index');
     }
 
     /**
-     * @return \Illuminate\Routing\Route
+     * @return CurrentRoute
      */
-    protected function route()
+    protected function route(): CurrentRoute
     {
         return $this->route;
     }
@@ -249,10 +296,10 @@ abstract class MorphModelController extends Controller
      * @param int $status
      * @param array $headers
      *
-     * @return \Illuminate\Http\Response
-     * @throws \Throwable
+     * @return Response
+     * @throws Throwable
      */
-    protected function render(array $data = [], $status = 200, array $headers = [])
+    protected function render(array $data = [], $status = 200, array $headers = []): Response
     {
         $html = view($this->template, $data, $this->mergeData)->render();
 
@@ -262,27 +309,37 @@ abstract class MorphModelController extends Controller
     /**
      * @return string
      */
-    protected function getMorphType()
+    protected function getGroupName(): string
+    {
+        return $this->groupName ?? $this->getMorphType();
+    }
+
+    /**
+     * @return string
+     */
+    protected function getMorphType(): string
     {
         return snake_case(str_replace('\\', '', class_basename($this->morphModel)));
     }
 
     /**
-     * @return \Illuminate\Support\Collection
+     * @return Collection
      */
-    protected function allMorphModels()
+    protected function allMorphModels(): Collection
     {
-        return forward_static_call([$this->morphModel, 'allByType'], $this->type);
+        $morphType = $this->getMorphType();
+
+        return forward_static_call([$this->morphModel, 'where'], "{$morphType}_type", str_singular($this->type))->get();
     }
 
     /**
-     * @param string $slug
+     * @param mixed $id
      *
      * @return Model
      */
-    protected function findMorphModel(string $slug)
+    protected function findMorphModel($id): Model
     {
-        return forward_static_call([$this->morphModel, 'findBySlug'], $slug);
+        return forward_static_call([$this->morphModel, 'with'], 'user')->findOrFail($id);
     }
 
     /**
@@ -290,7 +347,7 @@ abstract class MorphModelController extends Controller
      *
      * @return $this
      */
-    protected function pushToDefaults(array $items)
+    protected function pushToDefaults(array $items): MorphModelController
     {
         $this->mergeData = array_merge($this->mergeData, $items);
 
@@ -301,7 +358,7 @@ abstract class MorphModelController extends Controller
      * @return $this
      * @throws ModelNotFoundException
      */
-    protected function setupModel()
+    protected function setupModel(): MorphModelController
     {
         /** @var ModelNotFoundException $modelException */
         $modelException = with(new ModelNotFoundException())->setModel($this->model);
@@ -315,7 +372,7 @@ abstract class MorphModelController extends Controller
     /**
      * @return $this
      */
-    protected function setupDefaults()
+    protected function setupDefaults(): MorphModelController
     {
         $this->route = Route::current();
         if (method_exists($this->route, 'getName') && ! empty($this->route->getName())) {
@@ -328,11 +385,25 @@ abstract class MorphModelController extends Controller
     }
 
     /**
+     * @return string
+     */
+    protected function getTypeActionStr(): string
+    {
+        $morphTypePos = stripos($this->template, $this->getMorphType());
+        if ($morphTypePos === false) {
+            return $this->template;
+        }
+        $this->grouped = true;
+
+        return ltrim(substr($this->template, $morphTypePos), '.');
+    }
+
+    /**
      * @return $this
      */
-    protected function setTypeAndFormAction()
+    protected function setTypeAndFormAction(): MorphModelController
     {
-        list($type, $action) = explode('.', $this->template);
+        list($type, $action) = explode('.', $this->getTypeActionStr());
 
         if (array_key_exists($action, $this->actionMap)) {
             $action = $this->actionMap[$action];
@@ -350,7 +421,7 @@ abstract class MorphModelController extends Controller
     /**
      * @return $this
      */
-    protected function setTypeName()
+    protected function setTypeName(): MorphModelController
     {
         $this->typeName = $typeName = str_plural(ucfirst($this->type));
 
@@ -360,7 +431,7 @@ abstract class MorphModelController extends Controller
     /**
      * @return $this
      */
-    protected function setModelInstance()
+    protected function setModelInstance(): MorphModelController
     {
         $this->modelInstance = $instance = new $this->model();
 

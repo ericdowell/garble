@@ -72,6 +72,7 @@ class Text extends Model
      */
     public static function findByCurrentSlug()
     {
+        self::create()
         $slug = request()->input('slug');
 
         return self::findBySlug($slug);
