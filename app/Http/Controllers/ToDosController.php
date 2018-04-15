@@ -4,6 +4,7 @@ namespace Garble\Http\Controllers;
 
 use Garble\Text;
 use Garble\ToDo;
+use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\ToDosRequest;
 
 class ToDosController extends MorphModelController
@@ -14,6 +15,7 @@ class ToDosController extends MorphModelController
      * @var string
      */
     protected $model = ToDo::class;
+
     /**
      * @var string
      */
@@ -22,11 +24,11 @@ class ToDosController extends MorphModelController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Garble\Http\Requests\ToDosRequest $request
+     * @param  ToDosRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(ToDosRequest $request)
+    public function store(ToDosRequest $request): RedirectResponse
     {
         return parent::storeModel($request);
     }
@@ -34,10 +36,10 @@ class ToDosController extends MorphModelController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Garble\Http\Requests\ToDosRequest $request
-     * @param  string                             $slug
+     * @param  ToDosRequest $request
+     * @param  string $slug
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
     public function update(ToDosRequest $request, $slug)
     {

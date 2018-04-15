@@ -4,6 +4,7 @@ namespace Garble\Http\Controllers;
 
 use Garble\Note;
 use Garble\Text;
+use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\NotesRequest;
 
 class NotesController extends MorphModelController
@@ -14,6 +15,7 @@ class NotesController extends MorphModelController
      * @var string
      */
     protected $model = Note::class;
+
     /**
      * @var string
      */
@@ -22,11 +24,11 @@ class NotesController extends MorphModelController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Garble\Http\Requests\NotesRequest $request
+     * @param  NotesRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(NotesRequest $request)
+    public function store(NotesRequest $request): RedirectResponse
     {
         return parent::storeModel($request);
     }
@@ -34,12 +36,12 @@ class NotesController extends MorphModelController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Garble\Http\Requests\NotesRequest $request
-     * @param  string                             $slug
+     * @param  NotesRequest $request
+     * @param  string $slug
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(NotesRequest $request, $slug)
+    public function update(NotesRequest $request, $slug): RedirectResponse
     {
         return parent::updateModel($request, $slug);
     }

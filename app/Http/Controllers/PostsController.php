@@ -4,6 +4,7 @@ namespace Garble\Http\Controllers;
 
 use Garble\Post;
 use Garble\Text;
+use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\PostsRequest;
 
 class PostsController extends MorphModelController
@@ -14,6 +15,7 @@ class PostsController extends MorphModelController
      * @var string
      */
     protected $model = Post::class;
+
     /**
      * @var string
      */
@@ -22,11 +24,11 @@ class PostsController extends MorphModelController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Garble\Http\Requests\PostsRequest $request
+     * @param  PostsRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(PostsRequest $request)
+    public function store(PostsRequest $request): RedirectResponse
     {
         return parent::storeModel($request);
     }
@@ -34,12 +36,12 @@ class PostsController extends MorphModelController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Garble\Http\Requests\PostsRequest $request
-     * @param  string                             $slug
+     * @param  PostsRequest $request
+     * @param  string $slug
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(PostsRequest $request, $slug)
+    public function update(PostsRequest $request, $slug): RedirectResponse
     {
         return parent::updateModel($request, $slug);
     }
