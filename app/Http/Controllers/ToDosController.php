@@ -2,10 +2,11 @@
 
 namespace Garble\Http\Controllers;
 
+use Garble\Text;
 use Garble\ToDo;
 use Garble\Http\Requests\ToDosRequest;
 
-class ToDosController extends TextController
+class ToDosController extends MorphModelController
 {
     /**
      * Name of the affected Eloquent model.
@@ -13,6 +14,10 @@ class ToDosController extends TextController
      * @var string
      */
     protected $model = ToDo::class;
+    /**
+     * @var string
+     */
+    protected $morphModel = Text::class;
 
     /**
      * Store a newly created resource in storage.

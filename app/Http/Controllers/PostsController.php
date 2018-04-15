@@ -3,9 +3,10 @@
 namespace Garble\Http\Controllers;
 
 use Garble\Post;
+use Garble\Text;
 use Garble\Http\Requests\PostsRequest;
 
-class PostsController extends TextController
+class PostsController extends MorphModelController
 {
     /**
      * Name of the affected Eloquent model.
@@ -13,6 +14,10 @@ class PostsController extends TextController
      * @var string
      */
     protected $model = Post::class;
+    /**
+     * @var string
+     */
+    protected $morphModel = Text::class;
 
     /**
      * Store a newly created resource in storage.

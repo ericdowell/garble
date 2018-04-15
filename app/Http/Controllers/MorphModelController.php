@@ -2,45 +2,56 @@
 
 namespace Garble\Http\Controllers;
 
-use Route;
-use Garble\Text;
-use Garble\Http\Requests\TextsRequest;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-abstract class TextController extends Controller
+abstract class MorphModelController extends Controller
 {
     /**
      * @var string
      */
     protected $template;
+
     /**
      * @var string
      */
     protected $type;
+
     /**
      * @var string
      */
     protected $typeName;
+
     /**
      * @var \Illuminate\Routing\Route
      */
     protected $route;
+
     /**
      * @var array
      */
     protected $mergeData = [];
+
     /**
      * Name of the affected Eloquent model.
      *
      * @var string
      */
     protected $model;
+
     /**
      * @var Model|Builder
      */
     protected $modelInstance;
+
+    /**
+     * @var string
+     */
+    protected $morphModel;
+
     /**
      * @var array
      */
@@ -48,10 +59,15 @@ abstract class TextController extends Controller
         'create' => 'store',
         'edit' => 'update',
     ];
+
+    /**
+     * @var array
+     */
     protected $publicActions = [
         'index',
         'show',
     ];
+
     /**
      * @var string
      */
@@ -62,8 +78,7 @@ abstract class TextController extends Controller
      */
     final public function __construct()
     {
-        $this->setupModel()
-            ->setupDefaults();
+        $this->setupModel()->setupDefaults();
 
         if (! in_array($this->formAction, $this->publicActions)) {
             $this->middleware('auth');
@@ -78,7 +93,7 @@ abstract class TextController extends Controller
      */
     public function index()
     {
-        return $this->render(['all' => Text::allByType($this->type)]);
+        return $this->render(['all' => $this->allMorphModels()]);
     }
 
     /**
@@ -97,25 +112,24 @@ abstract class TextController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Garble\Http\Requests\TextsRequest $request
+     * @param  \Illuminate\Foundation\Http\FormRequest $request
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function storeModel(TextsRequest $request)
+    public function storeModel(FormRequest $request)
     {
         $model = $this->modelInstance->create($this->getModelAttributes($request));
 
-        $attributes = [
+        $morphType = $this->getMorphType();
+
+        $instance = forward_static_call([$this->morphModel, 'create'], [
             'slug' => $request->input('slug'),
-            'text_type' => $this->type,
-            'text_id' => $model->id,
+            "{$morphType}_type" => $this->type,
+            "{$morphType}_id" => $model->id,
             'user_id' => $request->input('user_id'),
-        ];
+        ]);
 
-        /** @var Text $text */
-        $text = Text::create($attributes);
-
-        $text->save();
+        $instance->save();
 
         return $this->redirectToIndex();
     }
@@ -130,7 +144,7 @@ abstract class TextController extends Controller
      */
     public function show($slug)
     {
-        ${$this->type} = $instance = Text::findBySlug($slug);
+        ${$this->type} = $instance = $this->findMorphModel($slug);
 
         return $this->render(compact($this->type, 'instance'));
     }
@@ -145,7 +159,7 @@ abstract class TextController extends Controller
      */
     public function edit($slug)
     {
-        $instance = Text::findBySlug($slug);
+        $instance = $this->findMorphModel($slug);
         $options = [
             'route' => [sprintf('%s.%s', $this->type, $this->formAction), $instance->slug],
             'method' => 'put',
@@ -157,20 +171,20 @@ abstract class TextController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Garble\Http\Requests\TextsRequest $request
-     * @param  string                             $slug
+     * @param  \Illuminate\Foundation\Http\FormRequest $request
+     * @param  string $slug
      *
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
-    public function updateModel(TextsRequest $request, $slug)
+    public function updateModel(FormRequest $request, $slug)
     {
-        $text = Text::findBySlug($slug);
+        $instance = $this->findMorphModel($slug);
 
         $slugInput = $request->input('slug');
-        if ($slugInput != $text->slug) {
-            $text->update(['slug' => $slugInput]);
+        if ($slugInput != $instance->slug) {
+            $instance->update(['slug' => $slugInput]);
         }
-        $text->text->update($this->getModelAttributes($request));
+        $instance->{$this->getMorphType()}->update($this->getModelAttributes($request));
 
         return $this->redirectToIndex();
     }
@@ -184,22 +198,22 @@ abstract class TextController extends Controller
      */
     public function destroy($slug)
     {
-        $text = Text::findBySlug($slug);
+        $instance = $this->findMorphModel($slug);
         /** @var Model $model */
-        $model = $text->text;
+        $model = $instance->{$this->getMorphType()};
 
         $model->destroy($model->id);
-        $text->destroy($text->slug);
+        $instance->destroy($instance->slug);
 
         return $this->redirectToIndex();
     }
 
     /**
-     * @param \Garble\Http\Requests\TextsRequest $request
+     * @param \Illuminate\Foundation\Http\FormRequest $request
      *
      * @return array
      */
-    protected function getModelAttributes(TextsRequest $request)
+    protected function getModelAttributes(FormRequest $request)
     {
         $modelAttributes = [];
 
@@ -232,19 +246,47 @@ abstract class TextController extends Controller
 
     /**
      * @param array $data
+     * @param int $status
+     * @param array $headers
      *
      * @return \Illuminate\Http\Response
      * @throws \Throwable
      */
-    protected function render(array $data = [])
+    protected function render(array $data = [], $status = 200, array $headers = [])
     {
         $html = view($this->template, $data, $this->mergeData)->render();
 
-        return response($html);
+        return response($html, $status, $headers);
     }
 
     /**
-     * @param mixed $items
+     * @return string
+     */
+    protected function getMorphType()
+    {
+        return snake_case(str_replace('\\', '', class_basename($this->morphModel)));
+    }
+
+    /**
+     * @return \Illuminate\Support\Collection
+     */
+    protected function allMorphModels()
+    {
+        return forward_static_call([$this->morphModel, 'allByType'], $this->type);
+    }
+
+    /**
+     * @param string $slug
+     *
+     * @return Model
+     */
+    protected function findMorphModel(string $slug)
+    {
+        return forward_static_call([$this->morphModel, 'findBySlug'], $slug);
+    }
+
+    /**
+     * @param array $items
      *
      * @return $this
      */
@@ -279,9 +321,7 @@ abstract class TextController extends Controller
         if (method_exists($this->route, 'getName') && ! empty($this->route->getName())) {
             $this->template = $this->route()->getName();
 
-            $this->setTypeAndFormAction()
-                ->setTypeName()
-                ->setModelInstance();
+            $this->setTypeAndFormAction()->setTypeName()->setModelInstance();
         }
 
         return $this;
