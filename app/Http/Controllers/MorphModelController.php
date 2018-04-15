@@ -370,7 +370,7 @@ abstract class MorphModelController extends Controller
      *
      * @return $this
      */
-    protected function pushToDefaults(array $items): MorphModelController
+    protected function pushToDefaults(array $items): self
     {
         $this->mergeData = array_merge($this->mergeData, $items);
 
@@ -381,7 +381,7 @@ abstract class MorphModelController extends Controller
      * @return $this
      * @throws ModelNotFoundException
      */
-    protected function setupModel(): MorphModelController
+    protected function setupModel(): self
     {
         /** @var ModelNotFoundException $modelException */
         $modelException = with(new ModelNotFoundException())->setModel($this->model);
@@ -395,7 +395,7 @@ abstract class MorphModelController extends Controller
     /**
      * @return $this
      */
-    protected function setupDefaults(): MorphModelController
+    protected function setupDefaults(): self
     {
         $this->route = Route::current();
         if (method_exists($this->route, 'getName') && ! empty($this->route->getName())) {
@@ -424,7 +424,7 @@ abstract class MorphModelController extends Controller
     /**
      * @return $this
      */
-    protected function setTypeAndFormAction(): MorphModelController
+    protected function setTypeAndFormAction(): self
     {
         list($type, $action) = explode('.', $this->getTypeActionStr());
 
@@ -444,7 +444,7 @@ abstract class MorphModelController extends Controller
     /**
      * @return $this
      */
-    protected function setTypeName(): MorphModelController
+    protected function setTypeName(): self
     {
         $this->typeName = $typeName = str_plural(ucfirst($this->type));
 
@@ -454,7 +454,7 @@ abstract class MorphModelController extends Controller
     /**
      * @return $this
      */
-    protected function setModelInstance(): MorphModelController
+    protected function setModelInstance(): self
     {
         $this->modelInstance = $instance = new $this->model();
 
