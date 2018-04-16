@@ -52,6 +52,9 @@ jobs:
           name: Run Database Migration
           command: php artisan migrate
       - run:
+          name: Fix app folder permissions
+          command: sudo chmod -R 0777 storage/ && sudo chmod -R 0775 bootstrap/cache/ && sudo chmod 0775 public/robots.txt
+      - run:
           name: Run Unit Tests and Generate Code Coverage XML File
           command: |
             mkdir -p ~/phpunit
