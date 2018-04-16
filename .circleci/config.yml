@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/php:7.2-zts-node-browsers
+      - image: ericdowell/laravel-circleci:latest
       - image: redis:latest
       - image: mysql:5.7
         environment:
@@ -13,18 +13,6 @@ jobs:
       TZ: "/usr/share/zoneinfo/America/Chicago"
     steps:
       - checkout
-      - run:
-          name: Install PHP Dependencies/Extensions
-          command: |
-            sudo apt update && sudo apt-get install -y libicu-dev zlib1g-dev xvfb chromium
-            sudo docker-php-ext-configure intl
-            sudo docker-php-ext-install intl
-            sudo docker-php-ext-install zip
-            sudo docker-php-ext-install mysqli
-            sudo docker-php-ext-install pdo_mysql
-      - run:
-          name: Update Global Composer
-          command: sudo composer self-update
       - run:
           name: Copy circle env file
           command: cp .env.circle .env
@@ -87,10 +75,6 @@ jobs:
       - run:
           name: Open Browsers
           command: DISPLAY=:0 ./vendor/laravel/dusk/bin/chromedriver-linux
-          background: true
-      - run:
-          name: Run Laravel Server
-          command: sudo php artisan serve --port=80
           background: true
       - run:
           name: Run Laravel Dusk Tests
