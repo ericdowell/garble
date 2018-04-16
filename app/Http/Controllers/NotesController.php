@@ -3,11 +3,10 @@
 namespace Garble\Http\Controllers;
 
 use Garble\Note;
-use Garble\Text;
 use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\NotesRequest;
 
-class NotesController extends MorphModelController
+class NotesController extends TextController
 {
     /**
      * Name of the affected Eloquent model.
@@ -15,11 +14,6 @@ class NotesController extends MorphModelController
      * @var string
      */
     protected $model = Note::class;
-
-    /**
-     * @var string
-     */
-    protected $morphModel = Text::class;
 
     /**
      * Store a newly created resource in storage.

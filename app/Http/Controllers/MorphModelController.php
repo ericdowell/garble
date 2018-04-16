@@ -169,10 +169,7 @@ abstract class MorphModelController extends Controller
      */
     protected function beforeStoreModel(FormRequest $request): array
     {
-        return [
-            'slug' => $request->input('slug'),
-            'user_id' => $request->input('user_id'),
-        ];
+        return [];
     }
 
     /**
@@ -239,13 +236,11 @@ abstract class MorphModelController extends Controller
     /**
      * @param FormRequest $request
      * @param Model $instance
+     *
+     * @return void
      */
-    protected function beforeModelUpdate(FormRequest $request, Model $instance)
+    protected function beforeModelUpdate(FormRequest $request, Model &$instance): void
     {
-        $slugInput = $request->input('slug');
-        if ($slugInput != $instance->slug) {
-            $instance->update(['slug' => $slugInput]);
-        }
     }
 
     /**
