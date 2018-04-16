@@ -30,7 +30,7 @@ abstract class MorphModelController extends Controller
     protected $typeName;
 
     /**
-     * @var \Illuminate\Routing\Route
+     * @var CurrentRoute
      */
     protected $route;
 
@@ -152,6 +152,7 @@ abstract class MorphModelController extends Controller
 
     /**
      * @param FormRequest $request
+     *
      * @return array
      */
     protected function beforeStoreModel(FormRequest $request): array
@@ -274,14 +275,6 @@ abstract class MorphModelController extends Controller
     }
 
     /**
-     * @return CurrentRoute
-     */
-    protected function route(): CurrentRoute
-    {
-        return $this->route;
-    }
-
-    /**
      * @param array $data
      * @param int $status
      * @param array $headers
@@ -368,7 +361,7 @@ abstract class MorphModelController extends Controller
     {
         $this->route = Route::current();
         if (method_exists($this->route, 'getName') && ! empty($this->route->getName())) {
-            $this->template = $this->route()->getName();
+            $this->template = $this->route->getName();
 
             $this->setTypeAndFormAction()->setTypeName()->setModelInstance();
         }
