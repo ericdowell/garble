@@ -17,7 +17,7 @@
 <div id="app">
     <nav class="navbar navbar-expand-lg navbar-light navbar-laravel">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
+            <a class="navbar-brand" href="{{ route('welcome.index') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,10 +27,10 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item"><a href="{{ url('/home') }}" class="nav-link">Home</a></li>
-                    <li class="nav-item"><a href="{{ url('/note') }}" class="nav-link">Notes</a></li>
-                    <li class="nav-item"><a href="{{ url('/post') }}" class="nav-link">Posts</a></li>
-                    <li class="nav-item"><a href="{{ url('/todo') }}" class="nav-link">Todos</a></li>
+                    <li class="nav-item"><a href="{{ route('home.index') }}" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="{{ route('note.index') }}" class="nav-link">Notes</a></li>
+                    <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Posts</a></li>
+                    <li class="nav-item"><a href="{{ route('todo.index') }}" class="nav-link">Todos</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

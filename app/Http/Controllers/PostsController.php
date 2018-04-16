@@ -3,6 +3,7 @@
 namespace Garble\Http\Controllers;
 
 use Garble\Post;
+use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\PostsRequest;
 
 class PostsController extends TextController
@@ -17,11 +18,11 @@ class PostsController extends TextController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Garble\Http\Requests\PostsRequest $request
+     * @param  PostsRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(PostsRequest $request)
+    public function store(PostsRequest $request): RedirectResponse
     {
         return parent::storeModel($request);
     }
@@ -29,12 +30,12 @@ class PostsController extends TextController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Garble\Http\Requests\PostsRequest $request
-     * @param  string                             $slug
+     * @param  PostsRequest $request
+     * @param  string $slug
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(PostsRequest $request, $slug)
+    public function update(PostsRequest $request, $slug): RedirectResponse
     {
         return parent::updateModel($request, $slug);
     }

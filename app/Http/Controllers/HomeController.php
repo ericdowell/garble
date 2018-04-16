@@ -2,25 +2,25 @@
 
 namespace Garble\Http\Controllers;
 
+use Illuminate\Http\Response;
+
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Show the application dashboard.
      *
-     * @return void
+     * @return Response
      */
-    public function __construct()
+    public function index(): Response
     {
-        $this->middleware('auth');
+        return response()->view('home');
     }
 
     /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
-    public function index()
+    public function welcome(): Response
     {
-        return view('home');
+        return response()->view('welcome');
     }
 }

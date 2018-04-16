@@ -3,6 +3,7 @@
 namespace Garble\Http\Controllers;
 
 use Garble\Note;
+use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\NotesRequest;
 
 class NotesController extends TextController
@@ -17,11 +18,11 @@ class NotesController extends TextController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Garble\Http\Requests\NotesRequest $request
+     * @param  NotesRequest $request
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function store(NotesRequest $request)
+    public function store(NotesRequest $request): RedirectResponse
     {
         return parent::storeModel($request);
     }
@@ -29,12 +30,12 @@ class NotesController extends TextController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Garble\Http\Requests\NotesRequest $request
-     * @param  string                             $slug
+     * @param  NotesRequest $request
+     * @param  string $slug
      *
-     * @return \Illuminate\Http\Response
+     * @return RedirectResponse
      */
-    public function update(NotesRequest $request, $slug)
+    public function update(NotesRequest $request, $slug): RedirectResponse
     {
         return parent::updateModel($request, $slug);
     }
