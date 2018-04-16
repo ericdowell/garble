@@ -6,7 +6,7 @@ use Garble\Text;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
 
-class TextController extends MorphModelController
+abstract class TextController extends MorphModelController
 {
     /**
      * @var string
