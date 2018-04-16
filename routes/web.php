@@ -5,8 +5,8 @@ Auth::routes();
 /*
  * Indexes
  */
-Route::get('/', ['as' => 'welcome.index', 'uses' => 'WelcomeController@index']);
-Route::get('/home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
+Route::get('/', ['as' => 'welcome.index', 'uses' => 'HomeController@welcome']);
+Route::middleware('auth')->get('/home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
 /*
  * Models
  */

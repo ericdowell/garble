@@ -88,7 +88,7 @@ abstract class MorphModelController extends Controller
     protected $formAction;
 
     /**
-     * MorphModelController constructor.
+     * Create a new controller instance.
      */
     public function __construct()
     {

@@ -35,7 +35,7 @@ class ToDosController extends TextController
      *
      * @return RedirectResponse
      */
-    public function update(ToDosRequest $request, $slug)
+    public function update(ToDosRequest $request, $slug): RedirectResponse
     {
         return parent::updateModel($request, $slug);
     }
