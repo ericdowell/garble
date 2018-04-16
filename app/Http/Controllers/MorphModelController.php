@@ -59,16 +59,6 @@ abstract class MorphModelController extends Controller
     /**
      * @var bool
      */
-    protected $grouped = false;
-
-    /**
-     * @var string
-     */
-    protected $groupName;
-
-    /**
-     * @var bool
-     */
     protected $withUser = true;
 
     /**
@@ -129,9 +119,6 @@ abstract class MorphModelController extends Controller
     public function create(): Response
     {
         $route = sprintf('%s.%s', $this->type, $this->formAction);
-        if ($this->grouped) {
-            $route = sprintf('%s.%s.%s', $this->getGroupName(), $this->type, $this->formAction);
-        }
 
         return $this->render(['options' => compact('route')]);
     }
@@ -198,13 +185,8 @@ abstract class MorphModelController extends Controller
     public function edit($id): Response
     {
         $instance = $this->findMorphModel($id);
-
-        $route = sprintf('%s.%s', $this->type, $this->formAction);
-        if ($this->grouped) {
-            $route = sprintf('%s.%s.%s', $this->getGroupName(), $this->type, $this->formAction);
-        }
         $options = [
-            'route' => [$route, $instance->getKey()],
+            'route' => [sprintf('%s.%s', $this->type, $this->formAction), $instance->getKey()],
             'method' => 'put',
         ];
 
@@ -317,14 +299,6 @@ abstract class MorphModelController extends Controller
     /**
      * @return string
      */
-    protected function getGroupName(): string
-    {
-        return $this->groupName ?? $this->getMorphType();
-    }
-
-    /**
-     * @return string
-     */
     protected function getMorphType(): string
     {
         return snake_case(str_replace('\\', '', class_basename($this->morphModel)));
@@ -403,25 +377,11 @@ abstract class MorphModelController extends Controller
     }
 
     /**
-     * @return string
-     */
-    protected function getTypeActionStr(): string
-    {
-        $morphTypePos = stripos($this->template, $this->getMorphType());
-        if ($morphTypePos === false) {
-            return $this->template;
-        }
-        $this->grouped = true;
-
-        return ltrim(substr($this->template, $morphTypePos), '.');
-    }
-
-    /**
      * @return $this
      */
     protected function setTypeAndFormAction(): self
     {
-        list($type, $action) = explode('.', $this->getTypeActionStr());
+        list($type, $action) = explode('.', $this->template);
 
         if (array_key_exists($action, $this->actionMap)) {
             $action = $this->actionMap[$action];
