@@ -6,21 +6,21 @@ use Garble\User;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Hash;
 
-class CreateUser extends Command
+class RegisterUser extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'user:make';
+    protected $signature = 'register:user';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Create a user account.';
+    protected $description = 'Register a new user account';
 
     /**
      * Execute the console command.
