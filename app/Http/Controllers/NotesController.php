@@ -24,7 +24,7 @@ class NotesController extends TextController
      */
     public function store(NotesRequest $request): RedirectResponse
     {
-        return parent::storeModel($request);
+        return $this->storeModel($request);
     }
 
     /**
@@ -37,6 +37,6 @@ class NotesController extends TextController
      */
     public function update(NotesRequest $request, $slug): RedirectResponse
     {
-        return parent::updateModel($request, $slug);
+        return $this->updateModel($request, $slug);
     }
 }

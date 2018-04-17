@@ -12,7 +12,7 @@ use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Routing\Route as CurrentRoute;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-abstract class MorphModelController extends Controller
+abstract class ModelMorphController extends Controller
 {
     /**
      * @var string
