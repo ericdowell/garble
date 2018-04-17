@@ -24,7 +24,7 @@ class ToDosController extends TextController
      */
     public function store(ToDosRequest $request): RedirectResponse
     {
-        return parent::storeModel($request);
+        return $this->storeModel($request);
     }
 
     /**
@@ -37,6 +37,6 @@ class ToDosController extends TextController
      */
     public function update(ToDosRequest $request, $slug): RedirectResponse
     {
-        return parent::updateModel($request, $slug);
+        return $this->updateModel($request, $slug);
     }
 }
