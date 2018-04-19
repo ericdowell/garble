@@ -5,6 +5,7 @@ namespace Garble\Http\Controllers;
 use Garble\Text;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Http\FormRequest;
+use EricDowell\ResourceController\Http\Controllers\ModelMorphController;
 
 abstract class TextController extends ModelMorphController
 {

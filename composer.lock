@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "15921b1f333d34954d8f58c1e97d22d0",
+    "content-hash": "49124a9d937363df04359ffbef9171bc",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -622,6 +622,59 @@
                 "validator"
             ],
             "time": "2018-04-10T10:11:19+00:00"
+        },
+        {
+            "name": "ericdowell/resource-controller",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ericdowell/resource-controller.git",
+                "reference": "e6a3b7328102590ed3ca1432f2a4529aefab71c9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/e6a3b7328102590ed3ca1432f2a4529aefab71c9",
+                "reference": "e6a3b7328102590ed3ca1432f2a4529aefab71c9",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "~5.5",
+                "php": ">=7.0.0"
+            },
+            "require-dev": {
+                "codeclimate/php-test-reporter": "dev-master",
+                "mockery/mockery": "^1.0",
+                "orchestra/testbench": "~3.0",
+                "phpunit/phpunit": "^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "EricDowell\\ResourceController\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "EricDowell\\ResourceController\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Eric Dowell",
+                    "email": "eric@ericdowell.com"
+                }
+            ],
+            "description": "Resource controllers to match the laravel resource route method.",
+            "time": "2018-04-19T01:57:31+00:00"
         },
         {
             "name": "erusev/parsedown",
