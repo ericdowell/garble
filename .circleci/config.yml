@@ -6,7 +6,9 @@ jobs:
       - image: redis:latest
       - image: mysql:5.7
         environment:
-          - MYSQL_DATABASE=circle_test
+          - MYSQL_DATABASE=forge
+          - MYSQL_USER=forge
+          - MYSQL_PASSWORD=secret
           - MYSQL_ALLOW_EMPTY_PASSWORD=true
           - MYSQL_ROOT_HOST=%
     environment:
@@ -56,14 +58,11 @@ jobs:
           command: sudo chmod -R 0777 storage/ && sudo chmod -R 0775 bootstrap/cache/ && sudo chmod 0775 public/robots.txt
       - run:
           name: Run Unit Tests and Generate Code Coverage XML File
-          command: |
-            mkdir -p ~/phpunit
-            mkdir -p build/logs
-            php vendor/bin/phpunit --log-junit ~/phpunit/junit.xml --coverage-clover build/logs/clover.xml
+          command: php vendor/bin/phpunit
       - store_test_results:
-          path: ~/phpunit
+          path: build/junit
       - store_artifacts:
-          path: ~/phpunit
+          path: build/junit
       - run:
           name: Attempt to Send Code Coverage XML File
           command: |
