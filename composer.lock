@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "49124a9d937363df04359ffbef9171bc",
+    "content-hash": "60a5faa8ef510446c1415ef825f1df42",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -625,21 +625,21 @@
         },
         {
             "name": "ericdowell/resource-controller",
-            "version": "dev-master",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ericdowell/resource-controller.git",
-                "reference": "e6a3b7328102590ed3ca1432f2a4529aefab71c9"
+                "reference": "6dca1c5ebb8722f3089d9d7074d3e62e350755af"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/e6a3b7328102590ed3ca1432f2a4529aefab71c9",
-                "reference": "e6a3b7328102590ed3ca1432f2a4529aefab71c9",
+                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/6dca1c5ebb8722f3089d9d7074d3e62e350755af",
+                "reference": "6dca1c5ebb8722f3089d9d7074d3e62e350755af",
                 "shasum": ""
             },
             "require": {
                 "laravel/framework": "~5.5",
-                "php": ">=7.0.0"
+                "php": "^7.1.3"
             },
             "require-dev": {
                 "codeclimate/php-test-reporter": "dev-master",
@@ -651,11 +651,6 @@
             "extra": {
                 "branch-alias": {
                     "dev-master": "1.0-dev"
-                },
-                "laravel": {
-                    "providers": [
-                        "EricDowell\\ResourceController\\ServiceProvider"
-                    ]
                 }
             },
             "autoload": {
@@ -674,7 +669,7 @@
                 }
             ],
             "description": "Resource controllers to match the laravel resource route method.",
-            "time": "2018-04-19T01:57:31+00:00"
+            "time": "2018-04-22T00:43:11+00:00"
         },
         {
             "name": "erusev/parsedown",

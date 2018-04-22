@@ -22,7 +22,6 @@ abstract class TextController extends ModelMorphController
     {
         return [
             'slug' => $request->input('slug'),
-            'user_id' => $request->input('user_id'),
         ];
     }
 

@@ -16,8 +16,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if( $all->count() != 0 )
-                    @foreach($all as $todo)
+                    @if( $models->count() != 0 )
+                    @foreach($models as $todo)
                         <tr>
                             <td><a href="{{ route($type.'.show', $todo->slug ) }}" title="{{ $todo->text->title }}">{{ $todo->text->title }}</a></td>
                             <td><strong>{{ $todo->text->completed ? 'Yes' : 'No' }}</strong></td>
@@ -42,7 +42,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $all }}
+            {{ $models }}
             @if(Auth::user())
             <a class="btn btn-primary" href="{{ route($type.'.create') }}">Create {{ $typeName }}</a>
             @endif
