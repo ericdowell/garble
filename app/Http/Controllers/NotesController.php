@@ -13,7 +13,7 @@ class NotesController extends TextController
      *
      * @var string
      */
-    protected $model = Note::class;
+    protected $modelClass = Note::class;
 
     /**
      * Store a newly created resource in storage.

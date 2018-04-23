@@ -13,7 +13,7 @@ class PostsController extends TextController
      *
      * @var string
      */
-    protected $model = Post::class;
+    protected $modelClass = Post::class;
 
     /**
      * Store a newly created resource in storage.

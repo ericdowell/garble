@@ -3,8 +3,8 @@
 namespace Garble\Http\Controllers;
 
 use Garble\Text;
+use Illuminate\Http\Request;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Foundation\Http\FormRequest;
 use EricDowell\ResourceController\Http\Controllers\ModelMorphController;
 
 abstract class TextController extends ModelMorphController
@@ -12,13 +12,22 @@ abstract class TextController extends ModelMorphController
     /**
      * @var string
      */
-    protected $morphModel = Text::class;
+    protected $morphModelClass = Text::class;
 
     /**
-     * @param FormRequest $request
+     * @param Request $request
      * @return array
      */
-    protected function beforeStoreModel(FormRequest $request): array
+    protected function beforeStoreMorphModel(Request $request): array
+    {
+        return $this->beforeStoreModel($request);
+    }
+
+    /**
+     * @param Request $request
+     * @return array
+     */
+    protected function beforeStoreModel(Request $request): array
     {
         return [
             'slug' => $request->input('slug'),
@@ -26,10 +35,10 @@ abstract class TextController extends ModelMorphController
     }
 
     /**
-     * @param FormRequest $request
+     * @param Request $request
      * @param Model $instance
      */
-    protected function beforeModelUpdate(FormRequest $request, Model &$instance): void
+    protected function beforeModelUpdate(Request $request, Model &$instance): void
     {
         $slugInput = $request->input('slug');
         if ($slugInput != $instance->slug) {

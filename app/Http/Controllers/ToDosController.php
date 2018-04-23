@@ -13,7 +13,7 @@ class ToDosController extends TextController
      *
      * @var string
      */
-    protected $model = ToDo::class;
+    protected $modelClass = ToDo::class;
 
     /**
      * Store a newly created resource in storage.
