@@ -67,8 +67,10 @@ class UserController extends ResourceModelController
         if (! Hash::check($currentPassword, $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Current password provided is incorrect.']);
         }
+        $attributes = $request->all();
+        $attributes['password'] = Hash::make($attributes['password']);
 
-        $user->update($this->getModelAttributes($user, $request->all(), true));
+        $user->update($this->getModelAttributes($user, $attributes, true));
 
         return $this->finishAction('update');
     }
