@@ -15,8 +15,8 @@
                     </tr>
                     </thead>
                     <tbody>
-                    @if( $all->count() != 0 )
-                    @foreach($all as $post)
+                    @if( $models->count() != 0 )
+                    @foreach($models as $post)
                         <tr>
                             <td><a href="{{ route($type.'.show', $post->slug ) }}" title="{{ $post->text->title }}">{{ $post->text->title }}</a></td>
 
@@ -39,7 +39,7 @@
                     </tbody>
                 </table>
             </div>
-            {{ $all }}
+            {{ $models }}
             @if(Auth::user())
                 <a class="btn btn-primary" href="{{ route($type.'.create') }}">Create {{ $typeName }}</a>
             @endif

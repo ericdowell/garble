@@ -8,7 +8,7 @@
 require('./bootstrap');
 
 window.confirmDelete = function(link) {
-    let message = confirm('Are you sure you want to delete the '+ link.dataset.title +' feature');
+    let message = confirm('Are you sure you want to delete the "'+ link.dataset.title +'" item?');
     if( message === true ) {
         return document.getElementById( link.dataset.formName ).submit();
     } else {

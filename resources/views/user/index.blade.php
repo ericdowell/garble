@@ -9,26 +9,22 @@
                 <table class="table table-striped table-bordered table-hover">
                     <thead>
                     <tr>
-                        <th>Title</th>
-                        <th>Complete?</th>
+                        <th>Name</th>
+                        <th>Email/Username</th>
                         <th>Edit</th>
+                        <th>Password</th>
                         <th>Delete</th>
                     </tr>
                     </thead>
                     <tbody>
                     @if( $models->count() != 0 )
-                    @foreach($models as $todo)
+                    @foreach($models as $user)
                         <tr>
-                            <td><a href="{{ route($type.'.show', $todo->slug ) }}" title="{{ $todo->text->title }}">{{ $todo->text->title }}</a></td>
-                            <td><strong>{{ $todo->text->completed ? 'Yes' : 'No' }}</strong></td>
-
-                            @if(Auth::user() && Auth::user()->id == $todo->user->id)
-                            <td><small><a class="btn btn-info btn-sm" href="{{ route($type.'.edit', $todo->slug) }}">Edit</a></small></td>
-                            <td>@include('include.delete_form', ['title' => $todo->text->title , 'instance' => $todo])</td>
-                            @else
-                            <td></td>
-                            <td></td>
-                            @endif
+                            <td><a href="{{ route($type.'.show', $user->id) }}" title="{{ $user->name }}">{{ $user->name  }}</a></td>
+                            <td><strong>{{ $user->email }}@if(!empty($user->username))/{{ $user->username }}@endif</strong></td>
+                            <td><small><a class="btn btn-info btn-sm" href="{{ route($type.'.edit', $user->id) }}">Edit</a></small></td>
+                            <td><small><a class="btn btn-info btn-sm" href="{{ route($type.'.password-edit', $user->id) }}">Change Password</a></small></td>
+                            <td>@include('include.delete_form', ['title' => $user->name.' ('.$user->email.')', 'instance' => $user])</td>
                         </tr>
                     @endforeach
                     @else
@@ -43,9 +39,7 @@
                 </table>
             </div>
             {{ $models }}
-            @if(Auth::user())
             <a class="btn btn-primary" href="{{ route($type.'.create') }}">Create {{ $typeName }}</a>
-            @endif
         </div>
     </div>
 </div>
