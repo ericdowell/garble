@@ -11,7 +11,7 @@ Route::middleware('auth')->get('/home', ['as' => 'home.index', 'uses' => 'HomeCo
 /*
  * Models
  */
-Route::get('user/password/{user}', ['as' => 'user.password-edit', 'uses' => 'UserController@passwordEdit']);
+Route::get('user/password/{user}/edit', ['as' => 'user.password-edit', 'uses' => 'UserController@passwordEdit']);
 Route::put('user/password/{user}', ['as' => 'user.password-update', 'uses' => 'UserController@passwordUpdate']);
 Route::resource('user', 'UserController');
 

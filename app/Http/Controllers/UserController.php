@@ -19,7 +19,9 @@ class UserController extends ResourceModelController
      *
      * @var array
      */
-    protected $actionMap = [];
+    protected $actionMap = [
+        'password-edit' => 'password-update',
+    ];
 
     /**
      * Route names of public actions, Auth Middleware are not applied to these.
