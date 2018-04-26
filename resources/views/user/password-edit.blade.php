@@ -16,9 +16,8 @@
                             @endif
                         </div>
                         {{ Form::model($user, $options) }}
-                        {{ Form::hidden('password_reset', '1') }}
                         <div class="form-group{{ $errors->has('current_password') ? ' has-error' : '' }}">
-                            {{ Form::label('current_password', 'Current Password', ['class' => 'col-md-12 control-label']) }}
+                            {{ Form::label('current_password', 'Current Password', ['class' => 'col-md-12 control-label', 'required' => 'required']) }}
                             <div class="col-md-12">
                                 @if ($errors->has('current_password'))
                                     <span class="help-block">
@@ -29,7 +28,7 @@
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
-                            {{ Form::label('password', 'Password', ['class' => 'col-md-12 control-label']) }}
+                            {{ Form::label('password', 'Password', ['class' => 'col-md-12 control-label', 'required' => 'required']) }}
                             <div class="col-md-12">
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -47,7 +46,7 @@
                         </div>
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
-                                {{ Form::submit('Change Password', [ 'class' => 'btn btn-primary' ]) }}
+                                {{ Form::submit('Change Password', ['class' => 'btn btn-primary', 'required' => 'required']) }}
                             </div>
                         </div>
                         {{ Form::close() }}

@@ -20,7 +20,7 @@
                                 @if($action == 'update' && empty($name))
                                     {{ ($name = $user->name) ? '':'' }}
                                 @endif
-                                {{ Form::text('name', $name, ['class' => 'form-control']) }}
+                                {{ Form::text('name', $name, ['class' => 'form-control', 'required' => 'required']) }}
                             </div>
                         </div>
                         <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
@@ -50,10 +50,22 @@
                                 @if($action == 'update' && empty($email))
                                     {{ ($email = $user->email) ? '':'' }}
                                 @endif
-                                {{ Form::email('email', $email, ['class' => 'form-control']) }}
+                                {{ Form::email('email', $email, ['class' => 'form-control', 'required' => 'required']) }}
                             </div>
                         </div>
-                        @if($action == 'create')
+                        @if($action == 'update')
+                        <div class="form-group{{ $errors->has('current_password') ? ' has-error' : '' }}">
+                            {{ Form::label('current_password', 'Current Password', ['class' => 'col-md-12 control-label']) }}
+                            <div class="col-md-12">
+                                @if ($errors->has('current_password'))
+                                    <span class="help-block">
+                                    <strong>{{ $errors->first('current_password') }}</strong>
+                                </span>
+                                @endif
+                                {{ Form::password('current_password', ['class' => 'form-control', 'required' => 'required']) }}
+                            </div>
+                        </div>
+                        @else
                         <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                             {{ Form::label('password', 'Password', ['class' => 'col-md-12 control-label']) }}
                             <div class="col-md-12">
@@ -62,13 +74,13 @@
                                         <strong>{{ $errors->first('password') }}</strong>
                                     </span>
                                 @endif
-                                {{ Form::password('password', ['class' => 'form-control']) }}
+                                {{ Form::password('password', ['class' => 'form-control', 'required' => 'required']) }}
                             </div>
                         </div>
-                        <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('password_confirmation') ? ' has-error' : '' }}">
                             {{ Form::label('password_confirmation', 'Password Confirmation', ['class' => 'col-md-12 control-label']) }}
                             <div class="col-md-12">
-                                {{ Form::password('password_confirmation', ['class' => 'form-control']) }}
+                                {{ Form::password('password_confirmation', ['class' => 'form-control', 'required' => 'required']) }}
                             </div>
                         </div>
                         @endif

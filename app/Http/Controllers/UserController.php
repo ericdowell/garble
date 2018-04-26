@@ -97,6 +97,13 @@ class UserController extends ResourceModelController
      */
     public function update(UserRequest $request, $id): RedirectResponse
     {
+        $user = $this->findModel($id);
+        $currentPassword = $request->input('current_password');
+
+        if (! Hash::check($currentPassword, $user->password)) {
+            return redirect()->back()->withInput()->withErrors(['current_password' => 'Current password provided is incorrect.']);
+        }
+
         return $this->updateModel($request, $id);
     }
 

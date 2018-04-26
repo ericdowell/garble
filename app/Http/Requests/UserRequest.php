@@ -24,10 +24,20 @@ class UserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required_without:current_password',
-            'username' => 'sometimes',
-            'email' => 'required_without:current_password',
-            'password' => 'sometimes|required|confirmed',
+            'name' => 'sometimes|string',
+            'username' => 'sometimes|string',
+            'email' => 'sometimes|email|required',
+            'password' => 'sometimes|string|required|confirmed',
+        ];
+    }
+
+    /**
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'required' => 'The :attribute is required',
         ];
     }
 }
