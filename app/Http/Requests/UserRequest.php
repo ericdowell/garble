@@ -27,7 +27,7 @@ class UserRequest extends FormRequest
             'name' => 'required_without:current_password',
             'username' => 'sometimes',
             'email' => 'required_without:current_password',
-            'password' => 'sometimes|required|confirmed'
+            'password' => 'sometimes|required|confirmed',
         ];
     }
 }

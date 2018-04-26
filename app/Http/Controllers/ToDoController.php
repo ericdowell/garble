@@ -3,8 +3,8 @@
 namespace Garble\Http\Controllers;
 
 use Garble\ToDo;
-use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\ToDoRequest;
+use Illuminate\Http\RedirectResponse;
 
 class ToDoController extends TextController
 {
