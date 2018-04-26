@@ -2,12 +2,13 @@
 
 namespace Garble\Http\Requests;
 
-class NotesRequest extends TextsRequest
+class PostRequest extends TextRequest
 {
     /**
      * The validation rules that apply to the request.
      */
     protected $rules = [
+        'title' => 'required',
         'body' => 'required',
     ];
 }

@@ -625,16 +625,16 @@
         },
         {
             "name": "ericdowell/resource-controller",
-            "version": "v1.2.1",
+            "version": "v1.2.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ericdowell/resource-controller.git",
-                "reference": "9093831e9e24ad7a4233a5c8db12ed5d232253fe"
+                "reference": "137fc1d5d9cb93f2cf68fcd1c202093c38cd85dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/9093831e9e24ad7a4233a5c8db12ed5d232253fe",
-                "reference": "9093831e9e24ad7a4233a5c8db12ed5d232253fe",
+                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/137fc1d5d9cb93f2cf68fcd1c202093c38cd85dd",
+                "reference": "137fc1d5d9cb93f2cf68fcd1c202093c38cd85dd",
                 "shasum": ""
             },
             "require": {
@@ -677,7 +677,7 @@
                 "resource",
                 "resource-controller"
             ],
-            "time": "2018-04-23T02:13:31+00:00"
+            "time": "2018-04-26T01:34:03+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -3535,16 +3535,16 @@
         },
         {
             "name": "laravel/homestead",
-            "version": "v7.3.0",
+            "version": "v7.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/homestead.git",
-                "reference": "9f3654533723a792df2327b99e127d20be22e725"
+                "reference": "b9e025de9854f9a6386fd4ca7cf33ccf0fd8bb60"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/homestead/zipball/9f3654533723a792df2327b99e127d20be22e725",
-                "reference": "9f3654533723a792df2327b99e127d20be22e725",
+                "url": "https://api.github.com/repos/laravel/homestead/zipball/b9e025de9854f9a6386fd4ca7cf33ccf0fd8bb60",
+                "reference": "b9e025de9854f9a6386fd4ca7cf33ccf0fd8bb60",
                 "shasum": ""
             },
             "require": {
@@ -3581,7 +3581,7 @@
                 }
             ],
             "description": "A virtual machine for web artisans.",
-            "time": "2018-03-12T19:16:22+00:00"
+            "time": "2018-04-24T00:18:06+00:00"
         },
         {
             "name": "maximebf/debugbar",

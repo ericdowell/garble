@@ -4,9 +4,9 @@ namespace Garble\Http\Controllers;
 
 use Garble\ToDo;
 use Illuminate\Http\RedirectResponse;
-use Garble\Http\Requests\ToDosRequest;
+use Garble\Http\Requests\ToDoRequest;
 
-class ToDosController extends TextController
+class ToDoController extends TextController
 {
     /**
      * Name of the affected Eloquent model.
@@ -18,11 +18,11 @@ class ToDosController extends TextController
     /**
      * Store a newly created resource in storage.
      *
-     * @param  ToDosRequest $request
+     * @param  ToDoRequest $request
      *
      * @return RedirectResponse
      */
-    public function store(ToDosRequest $request): RedirectResponse
+    public function store(ToDoRequest $request): RedirectResponse
     {
         return $this->storeModel($request);
     }
@@ -30,12 +30,12 @@ class ToDosController extends TextController
     /**
      * Update the specified resource in storage.
      *
-     * @param  ToDosRequest $request
+     * @param  ToDoRequest $request
      * @param  string $slug
      *
      * @return RedirectResponse
      */
-    public function update(ToDosRequest $request, $slug): RedirectResponse
+    public function update(ToDoRequest $request, $slug): RedirectResponse
     {
         return $this->updateModel($request, $slug);
     }

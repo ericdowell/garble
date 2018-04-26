@@ -2,27 +2,27 @@
 
 namespace Garble\Http\Controllers;
 
-use Garble\Note;
+use Garble\Post;
 use Illuminate\Http\RedirectResponse;
-use Garble\Http\Requests\NotesRequest;
+use Garble\Http\Requests\PostRequest;
 
-class NotesController extends TextController
+class PostController extends TextController
 {
     /**
      * Name of the affected Eloquent model.
      *
      * @var string
      */
-    protected $modelClass = Note::class;
+    protected $modelClass = Post::class;
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  NotesRequest $request
+     * @param  PostRequest $request
      *
      * @return RedirectResponse
      */
-    public function store(NotesRequest $request): RedirectResponse
+    public function store(PostRequest $request): RedirectResponse
     {
         return $this->storeModel($request);
     }
@@ -30,12 +30,12 @@ class NotesController extends TextController
     /**
      * Update the specified resource in storage.
      *
-     * @param  NotesRequest $request
+     * @param  PostRequest $request
      * @param  string $slug
      *
      * @return RedirectResponse
      */
-    public function update(NotesRequest $request, $slug): RedirectResponse
+    public function update(PostRequest $request, $slug): RedirectResponse
     {
         return $this->updateModel($request, $slug);
     }

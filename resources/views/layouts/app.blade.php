@@ -31,6 +31,7 @@
                     <li class="nav-item"><a href="{{ route('note.index') }}" class="nav-link">Notes</a></li>
                     <li class="nav-item"><a href="{{ route('post.index') }}" class="nav-link">Posts</a></li>
                     <li class="nav-item"><a href="{{ route('todo.index') }}" class="nav-link">Todos</a></li>
+                    <li class="nav-item"><a href="{{ route('user.index') }}" class="nav-link">Users</a></li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

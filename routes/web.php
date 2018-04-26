@@ -7,11 +7,16 @@ Auth::routes();
  */
 Route::get('/', ['as' => 'welcome.index', 'uses' => 'HomeController@welcome']);
 Route::middleware('auth')->get('/home', ['as' => 'home.index', 'uses' => 'HomeController@index']);
+
 /*
  * Models
  */
+Route::get('user/password/{user}', ['as' => 'user.password-edit', 'uses' => 'UserController@passwordEdit']);
+Route::put('user/password/{user}', ['as' => 'user.password-update', 'uses' => 'UserController@passwordUpdate']);
+Route::resource('user', 'UserController');
+
 Route::middleware('texts')->group(function () {
-    Route::resource('note', 'NotesController');
-    Route::resource('post', 'PostsController');
-    Route::resource('todo', 'ToDosController');
+    Route::resource('note', 'NoteController');
+    Route::resource('post', 'PostController');
+    Route::resource('todo', 'ToDoController');
 });

@@ -5,7 +5,7 @@ namespace Garble\Http\Requests;
 use Garble\Text;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-abstract class TextsRequest extends Request
+abstract class TextRequest extends Request
 {
     /**
      * Determine if the user is authorized to make this request.
