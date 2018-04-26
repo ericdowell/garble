@@ -3,8 +3,8 @@
 namespace Garble\Http\Controllers;
 
 use Garble\Note;
-use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\NoteRequest;
+use Illuminate\Http\RedirectResponse;
 
 class NoteController extends TextController
 {

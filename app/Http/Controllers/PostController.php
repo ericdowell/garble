@@ -3,8 +3,8 @@
 namespace Garble\Http\Controllers;
 
 use Garble\Post;
-use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\PostRequest;
+use Illuminate\Http\RedirectResponse;
 
 class PostController extends TextController
 {

@@ -7,8 +7,8 @@ use Throwable;
 use Garble\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Http\RedirectResponse;
 use Garble\Http\Requests\UserRequest;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Database\Eloquent\Model;
 use EricDowell\ResourceController\Http\Controllers\ResourceModelController;
 
