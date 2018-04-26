@@ -24,6 +24,13 @@ class UserController extends ResourceModelController
     ];
 
     /**
+     * Name of the affected Eloquent model.
+     *
+     * @var string
+     */
+    protected $modelClass = User::class;
+
+    /**
      * Route names of public actions, Auth Middleware are not applied to these.
      *
      * @var array
@@ -34,13 +41,6 @@ class UserController extends ResourceModelController
      * @var bool
      */
     protected $withUser = false;
-
-    /**
-     * Name of the affected Eloquent model.
-     *
-     * @var string
-     */
-    protected $modelClass = User::class;
 
     /**
      * @param int $id
