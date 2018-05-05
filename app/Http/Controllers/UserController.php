@@ -5,11 +5,9 @@ namespace Garble\Http\Controllers;
 use Hash;
 use Throwable;
 use Garble\User;
-use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Garble\Http\Requests\UserRequest;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Database\Eloquent\Model;
 use EricDowell\ResourceController\Http\Controllers\ResourceModelController;
 
 class UserController extends ResourceModelController
@@ -62,17 +60,12 @@ class UserController extends ResourceModelController
     public function passwordUpdate(UserRequest $request, $id): RedirectResponse
     {
         $user = $this->findModel($id);
-        $currentPassword = $request->input('current_password');
-
-        if (! Hash::check($currentPassword, $user->password)) {
+        if (! Hash::check($request->input('current_password'), $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Current password provided is incorrect.']);
         }
-        $attributes = $request->all();
-        $attributes['password'] = Hash::make($attributes['password']);
+        $user->update(['password' => Hash::make($request->input('password'))]);
 
-        $user->update($this->getModelAttributes($user, $attributes, true));
-
-        return $this->finishAction('update');
+        return $this->finishAction(__FUNCTION__);
     }
 
     /**
@@ -80,7 +73,7 @@ class UserController extends ResourceModelController
      *
      * @param  UserRequest $request
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function store(UserRequest $request): RedirectResponse
     {
@@ -93,7 +86,7 @@ class UserController extends ResourceModelController
      * @param  UserRequest $request
      * @param  mixed $id
      *
-     * @return \Illuminate\Http\RedirectResponse
+     * @return RedirectResponse
      */
     public function update(UserRequest $request, $id): RedirectResponse
     {
@@ -105,18 +98,5 @@ class UserController extends ResourceModelController
         }
 
         return $this->updateModel($request, $id);
-    }
-
-    /**
-     * Updates attributes based on request for Eloquent Model.
-     *
-     * @param Request $request
-     * @param Model $instance
-     *
-     * @return bool
-     */
-    protected function updateAction(Request $request, Model $instance): bool
-    {
-        return $instance->update($this->getModelAttributes($instance, $request->all(), true)) ?? false;
     }
 }
