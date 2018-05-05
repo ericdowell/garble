@@ -48,7 +48,7 @@ class UserController extends ResourceModelController
      */
     public function passwordEdit($id): Response
     {
-        return $this->editMethodPut()->edit($id);
+        return $this->edit($id);
     }
 
     /**
@@ -63,8 +63,7 @@ class UserController extends ResourceModelController
         if (! Hash::check($request->input('current_password'), $user->password)) {
             return redirect()->back()->withErrors(['current_password' => 'Current password provided is incorrect.']);
         }
-        $user->password = Hash::make($request->input('password'));
-        $user->save();
+        $user->update(['password' => Hash::make($request->input('password'))]);
 
         return $this->finishAction(__FUNCTION__);
     }
