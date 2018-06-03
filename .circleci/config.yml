@@ -86,4 +86,3 @@ jobs:
           command: tar cvzf /tmp/garble-latest.tar.gz .
       - store_artifacts:
           path: /tmp/garble-latest.tar.gz
-          destination: $CIRCLE_BRANCH
