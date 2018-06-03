@@ -45,9 +45,6 @@ jobs:
           name: Generate App Key
           command: php artisan key:generate
       - run:
-          name: Remove node_modules folder since it is no longer needed.
-          command: rm -rf node_modules
-      - run:
           name: Wait for MySQL
           command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run:
@@ -81,3 +78,12 @@ jobs:
       - run:
           name: Run Laravel Dusk Tests
           command: php artisan dusk
+      - run:
+          name: Remove node_modules folder since it is no longer needed.
+          command: rm -rf node_modules
+      - run:
+          name: Tarball the application
+          command: tar cvzf /tmp/garble-latest.tar.gz .
+      - store_artifacts:
+          path: /tmp/garble-latest.tar.gz
+          destination: $CIRCLE_BRANCH
