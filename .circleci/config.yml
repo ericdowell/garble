@@ -79,8 +79,8 @@ jobs:
           name: Run Laravel Dusk Tests
           command: php artisan dusk
       - run:
-          name: Remove node_modules folder since it is no longer needed.
-          command: rm -rf node_modules
+          name: Remove node_modules and build Folders (since they are no longer needed)
+          command: rm -rf node_modules build
       - run:
           name: Install PHP Dependencies with --no-dev flag
           command: composer install --no-interaction --optimize-autoloader --prefer-dist --no-dev
