@@ -2,9 +2,9 @@
 
 namespace Garble\Console;
 
-use Garble\Console\Commands\RegisterUser;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use EricDowell\ResourceController\Console\Commands\RegisterUser;
 
 class Kernel extends ConsoleKernel
 {

@@ -625,16 +625,16 @@
         },
         {
             "name": "ericdowell/resource-controller",
-            "version": "1.4.0",
+            "version": "1.4.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ericdowell/resource-controller.git",
-                "reference": "95ec02c41f61ac39f10a34375578e52b7443976b"
+                "reference": "a9e1db509d1d10a648542673c18d668b4e23a403"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/95ec02c41f61ac39f10a34375578e52b7443976b",
-                "reference": "95ec02c41f61ac39f10a34375578e52b7443976b",
+                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/a9e1db509d1d10a648542673c18d668b4e23a403",
+                "reference": "a9e1db509d1d10a648542673c18d668b4e23a403",
                 "shasum": ""
             },
             "require": {
@@ -650,7 +650,7 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.3-dev"
+                    "dev-master": "1.4-dev"
                 }
             },
             "autoload": {
@@ -677,7 +677,7 @@
                 "resource",
                 "resource-controller"
             ],
-            "time": "2018-06-03T00:48:00+00:00"
+            "time": "2018-06-03T20:02:30+00:00"
         },
         {
             "name": "erusev/parsedown",
@@ -4719,6 +4719,7 @@
                 "github",
                 "test"
             ],
+            "abandoned": "php-coveralls/php-coveralls",
             "time": "2017-12-06T23:17:56+00:00"
         },
         {
