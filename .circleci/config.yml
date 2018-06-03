@@ -82,6 +82,9 @@ jobs:
           name: Remove node_modules folder since it is no longer needed.
           command: rm -rf node_modules
       - run:
+          name: Install PHP Dependencies with --no-dev flag
+          command: composer install --no-interaction --optimize-autoloader --prefer-dist --no-dev
+      - run:
           name: Tarball the application
           command: tar cvzf /tmp/garble-latest.tar.gz .
       - store_artifacts:
