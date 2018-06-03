@@ -7,8 +7,8 @@ require 'yaml'
 VAGRANTFILE_API_VERSION ||= "2"
 confDir = $confDir ||= File.expand_path("vendor/laravel/homestead", File.dirname(__FILE__))
 
-homesteadYamlPath = File.expand_path("Homestead.yaml", File.dirname(__FILE__))
-homesteadJsonPath = File.expand_path("Homestead.json", File.dirname(__FILE__))
+homesteadYamlPath = File.expand_path(".Homestead.yaml", File.dirname(__FILE__))
+homesteadJsonPath = File.expand_path(".Homestead.json", File.dirname(__FILE__))
 afterScriptPath = "after.sh"
 aliasesPath = "aliases"
 
@@ -31,6 +31,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     else
         abort "Homestead settings file not found in #{confDir}"
     end
+
+    settings["folders"][0]["map"] = File.dirname(__FILE__)
 
     Homestead.configure(config, settings)
 

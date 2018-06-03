@@ -1,0 +1,17 @@
+ip: 192.168.10.11
+memory: 2048
+cpus: 1
+name: garble
+hostname: garble
+provider: virtualbox
+authorize: ~/.ssh/id_rsa.pub
+databases:
+    - homestead
+keys:
+    - ~/.ssh/id_rsa
+folders:
+    - map: /dynamically/set/in/Vagrantfile
+      to: /home/vagrant/code
+sites:
+    - map: garble.test
+      to: /home/vagrant/code/public
