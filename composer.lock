@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "80253c044a93bac754c42682bc20bc33",
+    "content-hash": "ae6a1685a2afaf1e2b7b77089da919ba",
     "packages": [
         {
             "name": "dnoegel/php-xdg-base-dir",
@@ -625,16 +625,16 @@
         },
         {
             "name": "ericdowell/resource-controller",
-            "version": "v1.3.1",
+            "version": "1.4.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ericdowell/resource-controller.git",
-                "reference": "ae176bace2eaece1576966c47fd1235566d9d90a"
+                "reference": "95ec02c41f61ac39f10a34375578e52b7443976b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/ae176bace2eaece1576966c47fd1235566d9d90a",
-                "reference": "ae176bace2eaece1576966c47fd1235566d9d90a",
+                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/95ec02c41f61ac39f10a34375578e52b7443976b",
+                "reference": "95ec02c41f61ac39f10a34375578e52b7443976b",
                 "shasum": ""
             },
             "require": {
@@ -677,7 +677,7 @@
                 "resource",
                 "resource-controller"
             ],
-            "time": "2018-05-05T18:38:43+00:00"
+            "time": "2018-06-03T00:48:00+00:00"
         },
         {
             "name": "erusev/parsedown",
