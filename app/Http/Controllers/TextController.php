@@ -15,6 +15,13 @@ abstract class TextController extends ModelMorphController
     protected $morphModelClass = Text::class;
 
     /**
+     * Flag for setting/updating 'user_id' as attribute of Eloquent Model.
+     *
+     * @var bool
+     */
+    protected $withUser = true;
+
+    /**
      * @param Request $request
      * @return array
      */

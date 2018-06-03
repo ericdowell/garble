@@ -10,5 +10,6 @@ class ToDoRequest extends TextRequest
     protected $rules = [
         'title' => 'required',
         'completed' => 'sometimes|required|boolean',
+        'body' => 'sometimes|string',
     ];
 }
