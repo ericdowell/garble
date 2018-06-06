@@ -625,16 +625,16 @@
         },
         {
             "name": "ericdowell/resource-controller",
-            "version": "1.4.1",
+            "version": "1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/ericdowell/resource-controller.git",
-                "reference": "a9e1db509d1d10a648542673c18d668b4e23a403"
+                "reference": "06092fe961746b5d26d793798f5a6cfd80a0757b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/a9e1db509d1d10a648542673c18d668b4e23a403",
-                "reference": "a9e1db509d1d10a648542673c18d668b4e23a403",
+                "url": "https://api.github.com/repos/ericdowell/resource-controller/zipball/06092fe961746b5d26d793798f5a6cfd80a0757b",
+                "reference": "06092fe961746b5d26d793798f5a6cfd80a0757b",
                 "shasum": ""
             },
             "require": {
@@ -677,7 +677,7 @@
                 "resource",
                 "resource-controller"
             ],
-            "time": "2018-06-03T20:02:30+00:00"
+            "time": "2018-06-06T03:08:59+00:00"
         },
         {
             "name": "erusev/parsedown",
