@@ -10,6 +10,7 @@ vendor/
 ## Files
 _ide_helper.php
 .phpstorm.meta.php
+clover.xml
 Homestead.yaml
 Homestead.json
 phpunit.dusk.xml

@@ -2,19 +2,11 @@
 
 namespace Garble\Http\Controllers;
 
-use Garble\Post;
 use Garble\Http\Requests\PostRequest;
 use Illuminate\Http\RedirectResponse;
 
 class PostController extends TextController
 {
-    /**
-     * Name of the affected Eloquent model.
-     *
-     * @var string
-     */
-    protected $modelClass = Post::class;
-
     /**
      * Store a newly created resource in storage.
      *

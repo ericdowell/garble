@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 use Garble\Http\Controllers\UserController;
 
 Auth::routes();

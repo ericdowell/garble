@@ -2,19 +2,11 @@
 
 namespace Garble\Http\Controllers;
 
-use Garble\ToDo;
 use Garble\Http\Requests\ToDoRequest;
 use Illuminate\Http\RedirectResponse;
 
 class ToDoController extends TextController
 {
-    /**
-     * Name of the affected Eloquent model.
-     *
-     * @var string
-     */
-    protected $modelClass = ToDo::class;
-
     /**
      * Store a newly created resource in storage.
      *

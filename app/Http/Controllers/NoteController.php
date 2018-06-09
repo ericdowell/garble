@@ -2,19 +2,11 @@
 
 namespace Garble\Http\Controllers;
 
-use Garble\Note;
 use Garble\Http\Requests\NoteRequest;
 use Illuminate\Http\RedirectResponse;
 
 class NoteController extends TextController
 {
-    /**
-     * Name of the affected Eloquent model.
-     *
-     * @var string
-     */
-    protected $modelClass = Note::class;
-
     /**
      * Store a newly created resource in storage.
      *

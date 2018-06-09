@@ -42,6 +42,16 @@ jobs:
           paths:
             - vendor
       - run:
+          name: Setup Code Climate test-reporter
+          command: |
+            if [ -z ${CC_TEST_REPORTER_ID+x} ]; then
+              echo "CC_TEST_REPORTER_ID not set";
+            else
+              curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter;
+              chmod +x ./cc-test-reporter;
+              ./cc-test-reporter before-build;
+            fi
+      - run:
           name: Generate App Key
           command: php artisan key:generate
       - run:
@@ -61,9 +71,13 @@ jobs:
       - store_artifacts:
           path: build/junit
       - run:
-          name: Attempt to Send Code Coverage XML File
+          name: Attempting to send clover.xml to Code Climate via test-reporter
           command: |
-            if [ -z ${CODECLIMATE_REPO_TOKEN+x} ]; then echo "CODECLIMATE_REPO_TOKEN not set"; else ./vendor/bin/test-reporter || echo 'Nothing sent, failed'; fi
+            if [ -z ${CC_TEST_REPORTER_ID+x} ]; then
+              echo "CC_TEST_REPORTER_ID not set";
+            else
+              ./cc-test-reporter after-build --coverage-input-type clover || echo 'Nothing sent, failed';
+            fi
       - run:
           name: Disable xdebug extension
           command: sudo rm /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
