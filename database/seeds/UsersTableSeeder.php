@@ -21,10 +21,7 @@ class UsersTableSeeder extends Seeder
                 'email' => 'garble@example.org',
                 'password' => Hash::make(env('APP_KEY')),
             ];
-            /** @var User $user */
-            $user = factory(User::class)->create($userInfo)->save();
-
-//            $user->assignRole('admin');
+            factory(User::class)->create($userInfo)->save();
         }
     }
 }

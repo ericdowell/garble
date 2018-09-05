@@ -3,8 +3,8 @@
 namespace Garble\Http\Controllers\Auth;
 
 use Garble\User;
-use Illuminate\Support\Facades\Hash;
 use Garble\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
