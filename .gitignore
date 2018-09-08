@@ -1,6 +1,7 @@
 ## Folders
 build/
 node_modules/
+public/hot/
 public/storage/
 public/css/
 public/fonts/
@@ -11,14 +12,15 @@ vendor/
 _ide_helper.php
 .phpstorm.meta.php
 clover.xml
-Homestead.yaml
-Homestead.json
+storage/*.key
 phpunit.dusk.xml
+.phpunit.result.cache
 public/mix-manifest.json
 
 ## Hidden Folders
 .idea/
 .vagrant/
+.vscode/
 
 ## Hidden Files
 .DS_Store

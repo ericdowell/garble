@@ -11,8 +11,8 @@ return [
     |
     */
 
-    'filename'  => '_ide_helper',
-    'format'    => 'php',
+    'filename' => '_ide_helper',
+    'format' => 'php',
 
     'meta_filename' => '.phpstorm.meta.php',
 
@@ -85,13 +85,13 @@ return [
 
     'magic' => [
         'Log' => [
-            'debug'     => 'Monolog\Logger::addDebug',
-            'info'      => 'Monolog\Logger::addInfo',
-            'notice'    => 'Monolog\Logger::addNotice',
-            'warning'   => 'Monolog\Logger::addWarning',
-            'error'     => 'Monolog\Logger::addError',
-            'critical'  => 'Monolog\Logger::addCritical',
-            'alert'     => 'Monolog\Logger::addAlert',
+            'debug' => 'Monolog\Logger::addDebug',
+            'info' => 'Monolog\Logger::addInfo',
+            'notice' => 'Monolog\Logger::addNotice',
+            'warning' => 'Monolog\Logger::addWarning',
+            'error' => 'Monolog\Logger::addError',
+            'critical' => 'Monolog\Logger::addCritical',
+            'alert' => 'Monolog\Logger::addAlert',
             'emergency' => 'Monolog\Logger::addEmergency',
         ],
     ],
@@ -153,13 +153,13 @@ return [
      |
      | For example, normally you would see this:
      |
-     |  * @property \Carbon\Carbon $created_at
-     |  * @property \Carbon\Carbon $updated_at
+     |  * @property \Illuminate\Support\Carbon $created_at
+     |  * @property \Illuminate\Support\Carbon $updated_at
      |
      | With this enabled, the properties will be this:
      |
-     |  * @property \Carbon\Carbon $createdAt
-     |  * @property \Carbon\Carbon $updatedAt
+     |  * @property \Illuminate\Support\Carbon $createdAt
+     |  * @property \Illuminate\Support\Carbon $updatedAt
      |
      | Note, it is currently an all-or-nothing option.
      |
