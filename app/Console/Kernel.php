@@ -4,7 +4,6 @@ namespace Garble\Console;
 
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
-use EricDowell\ResourceController\Console\Commands\RegisterUser;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,7 +13,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        RegisterUser::class,
+        //
     ];
 
     /**
